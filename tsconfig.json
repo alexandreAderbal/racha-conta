@@ -1,0 +1,23 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@Rotas": ["src/apresentacao/rotas/index"],
+      "@Hooks/*": ["src/apresentacao/hooks/*"],
+      "@Store": ["src/store/index"],
+      "@Store/*": ["src/store/*"],
+      "@Theme": ["src/core/theme/index"],
+      "@Paginas/*": ["src/apresentacao/paginas/*"],
+      "@Componentes/*": ["src/apresentacao/componentes/*"],
+      "@Constant": ["src/core/constants/index"],
+      "@Mocks/*": ["src/core/mocks/*"],
+      "@Infra-data-base/*": ["src/infraestrutura/database/*"],
+      "@Infra-repositorio/*": ["src/infraestrutura/repositorio/*"],
+      "@Infra-service": ["src/infraestrutura/service/index"],
+      "@Infra-modelo/*": ["src/infraestrutura/modelo/*"],
+      "@Infra-dto/*": ["src/infraestrutura/dto/*"],
+    }
+  }
+}

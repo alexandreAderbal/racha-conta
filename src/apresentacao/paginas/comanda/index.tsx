@@ -1,0 +1,111 @@
+import ContainerFooter from "@Componentes/containers/container-footer";
+import ContainerPage from "@Componentes/containers/container-page";
+import ComandaPessoas from "./comanda-pessoas";
+import { ItemDTO } from "@Infra-dto/item-dto";
+import { FlatList } from "react-native";
+import { Theme } from "@Theme";
+import {
+  Descricao,
+  IconeProduto,
+  InfoProduto,
+  MesaInfo,
+  MesaSubtitulo,
+  MesaTitulo,
+  Quantidade,
+  Resumo,
+  ResumoDivisor,
+  ResumoItem,
+  ResumoLabel,
+  ResumoValor,
+  Separador,
+  TituloSecao,
+  Valor,
+} from "./styles";
+import { BTN } from "@Componentes/btns";
+import { Card, CardTopo } from "@Componentes/containers/container-card";
+import { useComanda } from "@Hooks/use-comanda";
+import { Icon } from "@Componentes/icon";
+
+export function Comanda({ navigation }: any) {
+  const { comanda } = useComanda();
+
+  const valorTotal = comanda?.itens.reduce(
+    (total, item) => total + item.quantidade * item.valorUnitario,
+    0,
+  );
+
+  function renderItem({ item }: { item: ItemDTO }) {
+    const valorTotalItem = item.quantidade * item.valorUnitario;
+
+    return (
+      <Card>
+        <CardTopo>
+          <IconeProduto>
+            <Icon nome="food-outline" size={24} cor={Theme.colors.primary} />
+          </IconeProduto>
+
+          <InfoProduto>
+            <Descricao>{item.descricao}</Descricao>
+
+            <Quantidade>
+              {item.quantidade} x R${" "}
+              {item.valorUnitario.toFixed(2).replace(".", ",")}
+            </Quantidade>
+          </InfoProduto>
+
+          <Valor>R$ {valorTotalItem.toFixed(2).replace(".", ",")}</Valor>
+        </CardTopo>
+
+        <Separador />
+        <ComandaPessoas item={item} />
+      </Card>
+    );
+  }
+
+  return (
+    <ContainerPage>
+      <MesaInfo>
+        <MesaTitulo>Mesa 12</MesaTitulo>
+
+        <MesaSubtitulo>Amigos do Futebol</MesaSubtitulo>
+      </MesaInfo>
+
+      <Resumo>
+        <ResumoItem>
+          <ResumoLabel>Itens</ResumoLabel>
+          <ResumoValor>{comanda?.itens.length}</ResumoValor>
+        </ResumoItem>
+
+        <ResumoDivisor />
+
+        <ResumoItem>
+          <ResumoLabel>Total</ResumoLabel>
+          <ResumoValor>
+            R$ {valorTotal ? valorTotal.toFixed(2).replace(".", ",") : "0,00"}
+          </ResumoValor>
+        </ResumoItem>
+      </Resumo>
+
+      <TituloSecao>Produtos consumidos</TituloSecao>
+
+      <FlatList
+        data={comanda?.itens}
+        keyExtractor={(item) => item.descricao}
+        renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 16,
+          paddingBottom: 120,
+        }}
+      />
+
+      <ContainerFooter>
+        <BTN.Primary
+          action={() => navigation.navigate("ComandaResultado")}
+          icon="account-multiple-check-outline"
+          label="Continuar divisão"
+        />
+      </ContainerFooter>
+    </ContainerPage>
+  );
+}

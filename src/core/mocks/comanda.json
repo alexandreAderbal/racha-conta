@@ -1,0 +1,66 @@
+{
+  "id": null,
+  "mesa": "Mesa 01",
+  "subtotal": 344,
+  "taxaServicoGarcom": 0,
+  "total": 344,
+  "status": "EM_ANDAMENTO",
+  "itens": [
+    {
+      "id": null,
+      "descricao": "BATATA FRITA",
+      "quantidade": 1,
+      "valorUnitario": 35,
+      "valorTotal": 35,
+      "pessoas": []
+    },
+    {
+      "id": null,
+      "descricao": "BRAHMA",
+      "quantidade": 6,
+      "valorUnitario": 16,
+      "valorTotal": 96,
+      "pessoas": []
+    },
+    {
+      "id": null,
+      "descricao": "COCA-COLA ZERO",
+      "quantidade": 2,
+      "valorUnitario": 9,
+      "valorTotal": 18,
+      "pessoas": []
+    },
+    {
+      "id": null,
+      "descricao": "COUVERT",
+      "quantidade": 3,
+      "valorUnitario": 10,
+      "valorTotal": 30,
+      "pessoas": []
+    },
+    {
+      "id": null,
+      "descricao": "FRANGO FRITO AO ALHO",
+      "quantidade": 1,
+      "valorUnitario": 110,
+      "valorTotal": 110,
+      "pessoas": []
+    },
+    {
+      "id": null,
+      "descricao": "STELLA GOLD 600 ML",
+      "quantidade": 1,
+      "valorUnitario": 25,
+      "valorTotal": 25,
+      "pessoas": []
+    },
+    {
+      "id": null,
+      "descricao": "X 1500",
+      "quantidade": 1,
+      "valorUnitario": 30,
+      "valorTotal": 30,
+      "pessoas": []
+    }
+  ]
+}
