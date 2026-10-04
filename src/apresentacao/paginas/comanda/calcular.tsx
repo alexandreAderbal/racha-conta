@@ -18,6 +18,11 @@ export default function Calcular({ action }: IProps) {
 
   modalRef.current?.titulo("Serviço garçom");
 
+  const abrirComandaResultado = () => {
+    modalRef.current?.fechar();
+    navigation.navigate("ComandaResultado");
+  };
+
   return (
     <ContainerFooter>
       <BTN.Sucesso
@@ -42,7 +47,7 @@ export default function Calcular({ action }: IProps) {
         />
 
         <BTN.Sucesso
-          action={() => navigation.navigate("ComandaResultado")}
+          action={abrirComandaResultado}
           icon="calculator-variant-outline"
           label="Calcular"
         />

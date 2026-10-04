@@ -15,7 +15,7 @@ export function Camera({ navigation }: any) {
   const [flashLigado, setFlashLigado] = useState(false);
   const [facing, setFacing] = useState<CameraType>("back");
   const [tirandoFoto, setTirandoFoto] = useState(false);
-  const { adicionarComanda } = useComanda();
+  const { adicionarComanda, limparPessoas } = useComanda();
   const { ativarSpinner, desativarSpinner } = useSpinner();
 
   if (!permission) {
@@ -80,6 +80,7 @@ export function Camera({ navigation }: any) {
       if (uri) {
         const base64 = await UTILS.file.base64(uri);
         adicionarComanda(await SERVICE.openAIService.analisar([base64]));
+        limparPessoas();
         navigation.navigate("Comanda");
       }
     } catch (error) {

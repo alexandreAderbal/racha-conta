@@ -7,7 +7,7 @@ import { SERVICE } from "@Infra-service";
 
 export function useSelecionarArquivos() {
   const { ativarSpinner, desativarSpinner } = useSpinner();
-  const { adicionarComanda } = useComanda();
+  const { adicionarComanda, limparPessoas } = useComanda();
   const navigation = useNavigation<any>();
 
   async function selecionarArquivos() {
@@ -47,7 +47,7 @@ export function useSelecionarArquivos() {
       ativarSpinner();
 
       const imagensBase64 = await arquivosParaBase64(arquivos);
-
+      limparPessoas();
       adicionarComanda(await SERVICE.openAIService.analisar(imagensBase64));
 
       navigation.navigate("Comanda");

@@ -12,6 +12,7 @@ import {
   removerSelecionarPessoas,
   selecionarPessoa,
   selecionarPessoas,
+  removerPessoas,
 } from "@Store/slices/comanda-slice";
 
 export function useComanda() {
@@ -64,6 +65,10 @@ export function useComanda() {
     dispatch(removerSelecionarPessoas());
   };
 
+  const limparPessoas = () => {
+    dispatch(removerPessoas());
+  };
+
   const salvarComanda = async () => {
     try {
       ativarSpinner("Salvando a divisão");
@@ -88,6 +93,7 @@ export function useComanda() {
     atualizarQuantidadeConsumida,
     limparPessoasMarcadas,
     atualizarTaxaGarcom,
+    limparPessoas,
     comanda,
     pessoas,
     salvarComanda,

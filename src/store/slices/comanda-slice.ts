@@ -94,9 +94,8 @@ const ComandaSlice = createSlice({
         (Math.abs(quantidadeAtribuida - item.quantidade) < 0.00001 &&
           item.pessoas.every(
             (p) =>
-              Math.abs(
-                (p.quantidadeConsumida ?? 0) - primeiraQuantidade,
-              ) < 0.00001,
+              Math.abs((p.quantidadeConsumida ?? 0) - primeiraQuantidade) <
+              0.00001,
           ));
 
       if (pessoaJaExiste) {
@@ -122,9 +121,7 @@ const ComandaSlice = createSlice({
       }
 
       state.pessoas = state.pessoas.map((p) =>
-        p.nome === pessoa.nome
-          ? { ...p, selecionado: !pessoaJaExiste }
-          : p,
+        p.nome === pessoa.nome ? { ...p, selecionado: !pessoaJaExiste } : p,
       );
     },
     atualizarQuantidadePessoaItem(
@@ -187,6 +184,9 @@ const ComandaSlice = createSlice({
         return { ...p, selecionado: existe };
       });
     },
+    removerPessoas(state) {
+      state.pessoas = [];
+    },
   },
 });
 
@@ -200,6 +200,7 @@ export const {
   limparLimpar,
   atualizarPessoas,
   removerPessoa,
+  removerPessoas,
 } = ComandaSlice.actions;
 
 export default ComandaSlice.reducer;
