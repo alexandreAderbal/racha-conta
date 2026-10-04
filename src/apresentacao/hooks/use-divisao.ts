@@ -57,10 +57,19 @@ export function useDivisao() {
         });
       });
 
-      // Calcula os 10% do garçom, caso exista
+      // Calcula a taxa configurada do garcom, caso exista
       resultado.forEach((pessoa) => {
         pessoa.taxaServicoGarcom =
           pessoa.subtotal * (comanda.taxaServicoGarcom / 100);
+
+        if (comanda.taxaServicoGarcom > 0) {
+          pessoa.itens.push({
+            id: -1,
+            descricao: `Taxa de serviço do garçom (${comanda.taxaServicoGarcom}%)`,
+            quantidade: 1,
+            valor: pessoa.taxaServicoGarcom,
+          });
+        }
 
         pessoa.total = pessoa.subtotal + pessoa.taxaServicoGarcom;
       });
@@ -76,26 +85,43 @@ export function useDivisao() {
       return;
     }
 
-    let mensagem = `🍽️ Racha Conta\n`;
-    mensagem += `Mesa: ${comanda.mesa}\n`;
-    mensagem += `Total da mesa: ${NumberUtil.formatarValor(comanda.total)}\n\n`;
-
-    mensagem += `👥 DIVISÃO DA CONTA\n`;
-    mensagem += `────────────────────\n\n`;
+    const separador = "────────────────────";
+    const linhas = [
+      "🍽️ RACHA CONTA",
+      `Mesa: ${comanda.mesa}`,
+      `Total da conta: ${NumberUtil.formatarValor(comanda.total)}`,
+      "",
+      "👥 DIVISÃO POR PESSOA",
+      separador,
+    ];
 
     divisao.forEach((pessoa) => {
-      mensagem += `👤 ${pessoa.nome}\n`;
+      linhas.push(`👤 ${pessoa.nome}`);
 
-      pessoa.itens.forEach((item) => {
-        mensagem += `• ${item.quantidade} x ${item.descricao}: ${NumberUtil.formatarValor(item.valor)}\n`;
-      });
+      pessoa.itens
+        .filter((item) => item.id !== -1)
+        .forEach((item) => {
+          const quantidade = item.quantidade.toLocaleString("pt-BR", {
+            maximumFractionDigits: 4,
+          });
+          linhas.push(
+            `  • ${quantidade} × ${item.descricao} — ${NumberUtil.formatarValor(item.valor)}`,
+          );
+        });
 
-      mensagem += `\n`;
-      mensagem += `💰 Total: ${NumberUtil.formatarValor(pessoa.total)}\n`;
-      mensagem += `\n────────────────────\n\n`;
+      linhas.push(`Subtotal: ${NumberUtil.formatarValor(pessoa.subtotal)}`);
+
+      if (comanda.taxaServicoGarcom > 0) {
+        linhas.push(
+          `Taxa do garçom (${comanda.taxaServicoGarcom}%): ${NumberUtil.formatarValor(pessoa.taxaServicoGarcom)}`,
+        );
+      }
+
+      linhas.push(`✅ Total a pagar: ${NumberUtil.formatarValor(pessoa.total)}`);
+      linhas.push(separador);
     });
 
-    mensagem += `Total da mesa: ${NumberUtil.formatarValor(comanda.total)}`;
+    const mensagem = linhas.join("\n");
 
     try {
       await Share.share({

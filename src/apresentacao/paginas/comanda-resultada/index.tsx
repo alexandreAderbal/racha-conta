@@ -39,7 +39,9 @@ export default function ComandaResultado() {
   }
 
   useEffect(() => {
-    if (comanda) dividirConta(comanda);
+    if (comanda) {
+      dividirConta(comanda);
+    }
   }, [comanda]);
 
   return (

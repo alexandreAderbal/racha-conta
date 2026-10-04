@@ -1,6 +1,8 @@
 import { useAppDispatch, useAppSelector } from "@Store/hooks";
 import { ComandaDTO } from "@Infra-dto/comanda-dto";
 import { PessoaDTO } from "@Infra-dto/pessoa-dto";
+import { useSpinner } from "./use-spinner";
+import { SERVICE } from "@Infra-service";
 import {
   atualizaComandaItemPessoas,
   atualizarComanda,
@@ -10,8 +12,6 @@ import {
   selecionarPessoa,
   selecionarPessoas,
 } from "@Store/slices/comanda-slice";
-import { useSpinner } from "./use-spinner";
-import { SERVICE } from "@Infra-service";
 
 export function useComanda() {
   const { comanda, pessoas } = useAppSelector((state) => state.comandaReducer);
@@ -20,6 +20,11 @@ export function useComanda() {
 
   const adicionarComanda = (comanda: ComandaDTO) => {
     dispatch(atualizarComanda(comanda));
+  };
+
+  const atualizarTaxaGarcom = (value: string) => {
+    if (comanda)
+      adicionarComanda({ ...comanda, taxaServicoGarcom: Number(value) });
   };
 
   const adicionarPessoa = (pessoa: PessoaDTO, descricao: string) => {
@@ -76,6 +81,7 @@ export function useComanda() {
     marcarPessoas,
     atualizarQuantidadeConsumida,
     limparPessoasMarcadas,
+    atualizarTaxaGarcom,
     comanda,
     pessoas,
     salvarComanda,

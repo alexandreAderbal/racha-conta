@@ -1,4 +1,3 @@
-import ContainerFooter from "@Componentes/containers/container-footer";
 import ContainerPage from "@Componentes/containers/container-page";
 import { ItemDTO } from "@Infra-dto/item-dto";
 import { FlatList } from "react-native";
@@ -19,14 +18,14 @@ import {
   TituloSecao,
   Valor,
 } from "./styles";
-import { BTN } from "@Componentes/btns";
 import { Card, CardTopo } from "@Componentes/containers/container-card";
 import { useComanda } from "@Hooks/use-comanda";
-import { Icon } from "@Componentes/icon";
 import ComandaPessoas from "./comanda-pessoas";
+import { Icon } from "@Componentes/icon";
+import Calcular from "./calcular";
 
-export function Comanda({ navigation }: any) {
-  const { comanda } = useComanda();
+export function Comanda() {
+  const { comanda, atualizarTaxaGarcom } = useComanda();
 
   const valorTotal = comanda?.itens.reduce(
     (total, item) => total + item.quantidade * item.valorUnitario,
@@ -96,13 +95,7 @@ export function Comanda({ navigation }: any) {
         }}
       />
 
-      <ContainerFooter>
-        <BTN.Primary
-          action={() => navigation.navigate("ComandaResultado")}
-          icon="account-multiple-check-outline"
-          label="Continuar divisão"
-        />
-      </ContainerFooter>
+      <Calcular action={atualizarTaxaGarcom} />
     </ContainerPage>
   );
 }

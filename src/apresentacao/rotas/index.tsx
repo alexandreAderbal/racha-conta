@@ -1,6 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import ComandaResultado from "@Paginas/comanda-resultada";
+import { SemInternet } from "@Paginas/sem-internet";
+import { useInternet } from "@Hooks/use-internet";
 import ComandaLista from "@Paginas/comanda-lista";
 import { Comanda } from "@Paginas/comanda";
 import { Camera } from "@Paginas/camera";
@@ -10,6 +12,11 @@ import { Home } from "@Paginas/home";
 const Stack = createNativeStackNavigator();
 
 export function Rotas() {
+  const { conectado, verificarConexao } = useInternet();
+
+  if (!conectado) {
+    return <SemInternet verificarConexao={verificarConexao} />;
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator>

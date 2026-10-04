@@ -95,7 +95,7 @@ export function Home({ navigation }: Props) {
       </Centralizado>
 
       <Footer>
-        <Icon nome="account-group-outline" size={18} cor="#00A994" />
+        <Icon nome="calculator-variant" size={18} cor="#00A994" />
         <FooterText>Divida a conta. Aproveite o momento.</FooterText>
       </Footer>
     </ContainerPage>

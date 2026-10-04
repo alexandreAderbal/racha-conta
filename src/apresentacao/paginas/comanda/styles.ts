@@ -191,3 +191,8 @@ export const TextoPessoa = styled.Text`
   font-weight: 600;
   color: ${Theme.colors.text};
 `;
+
+export const Actions = styled.View`
+  flex-direction: row;
+  gap: 12px;
+`;

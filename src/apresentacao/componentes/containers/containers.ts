@@ -10,3 +10,7 @@ export const Centralizado = styled.View`
   padding: 32px 24px 24px;
   justify-content: center;
 `;
+
+export const Space = styled.View`
+  margin-top: 8px;
+`;
