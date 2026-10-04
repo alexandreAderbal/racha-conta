@@ -1,6 +1,5 @@
 import ContainerFooter from "@Componentes/containers/container-footer";
 import ContainerPage from "@Componentes/containers/container-page";
-import ComandaPessoas from "./comanda-pessoas";
 import { ItemDTO } from "@Infra-dto/item-dto";
 import { FlatList } from "react-native";
 import { Theme } from "@Theme";
@@ -9,7 +8,6 @@ import {
   IconeProduto,
   InfoProduto,
   MesaInfo,
-  MesaSubtitulo,
   MesaTitulo,
   Quantidade,
   Resumo,
@@ -25,6 +23,7 @@ import { BTN } from "@Componentes/btns";
 import { Card, CardTopo } from "@Componentes/containers/container-card";
 import { useComanda } from "@Hooks/use-comanda";
 import { Icon } from "@Componentes/icon";
+import ComandaPessoas from "./comanda-pessoas";
 
 export function Comanda({ navigation }: any) {
   const { comanda } = useComanda();
@@ -65,9 +64,7 @@ export function Comanda({ navigation }: any) {
   return (
     <ContainerPage>
       <MesaInfo>
-        <MesaTitulo>Mesa 12</MesaTitulo>
-
-        <MesaSubtitulo>Amigos do Futebol</MesaSubtitulo>
+        <MesaTitulo>Mesa: {comanda?.mesa}</MesaTitulo>
       </MesaInfo>
 
       <Resumo>
@@ -90,7 +87,7 @@ export function Comanda({ navigation }: any) {
 
       <FlatList
         data={comanda?.itens}
-        keyExtractor={(item) => item.descricao}
+        keyExtractor={(item, index) => `${item.id ?? item.descricao}_${index}`}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

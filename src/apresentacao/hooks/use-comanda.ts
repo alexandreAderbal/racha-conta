@@ -4,6 +4,7 @@ import { PessoaDTO } from "@Infra-dto/pessoa-dto";
 import {
   atualizaComandaItemPessoas,
   atualizarComanda,
+  atualizarQuantidadePessoaItem,
   atualizarPessoas,
   removerSelecionarPessoas,
   selecionarPessoa,
@@ -35,6 +36,20 @@ export function useComanda() {
     dispatch(selecionarPessoas(pessoas));
   };
 
+  const atualizarQuantidadeConsumida = (
+    descricao: string,
+    nome: string,
+    quantidadeConsumida: number,
+  ) => {
+    dispatch(
+      atualizarQuantidadePessoaItem({
+        descricao,
+        nome,
+        quantidadeConsumida,
+      }),
+    );
+  };
+
   const limparPessoasMarcadas = (pessoas: PessoaDTO[]) => {
     dispatch(removerSelecionarPessoas());
   };
@@ -59,6 +74,7 @@ export function useComanda() {
     adicionarPessoa,
     marcarPessoa,
     marcarPessoas,
+    atualizarQuantidadeConsumida,
     limparPessoasMarcadas,
     comanda,
     pessoas,

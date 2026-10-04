@@ -11,12 +11,6 @@ export const MesaTitulo = styled.Text`
   color: ${Theme.colors.text};
 `;
 
-export const MesaSubtitulo = styled.Text`
-  margin-top: 3px;
-  font-size: 14px;
-  color: ${Theme.colors.textSecondary};
-`;
-
 export const Resumo = styled.View`
   margin: 0 16px 18px;
   padding: 8px;
@@ -154,6 +148,7 @@ export const Input = styled.TextInput`
 export const BotaoPessoa = styled.TouchableOpacity<{
   selecionada: boolean;
 }>`
+  flex: 1;
   min-height: 42px;
   padding: 0 14px;
   margin-bottom: 8px;
@@ -162,6 +157,32 @@ export const BotaoPessoa = styled.TouchableOpacity<{
   border-radius: 8px;
   background-color: ${({ selecionada }) =>
     selecionada ? "#E6F4F1" : "#F9FAFB"};
+`;
+
+export const LinhaPessoaControle = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8px;
+`;
+
+export const QuantidadeLabel = styled.Text`
+  margin-left: 8px;
+  font-size: 13px;
+  color: ${Theme.colors.textSecondary};
+`;
+
+export const QuantidadeInput = styled.TextInput`
+  width: 64px;
+  height: 42px;
+  margin-left: 6px;
+  padding: 0 6px;
+  border-width: 1px;
+  border-color: #d1d5db;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: ${Theme.colors.text};
+  text-align: center;
+  font-size: 15px;
 `;
 
 export const TextoPessoa = styled.Text`

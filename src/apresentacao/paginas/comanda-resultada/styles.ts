@@ -64,15 +64,28 @@ export const Linha = styled.View`
   margin: 6px 0;
 `;
 
-export const LinhaValor = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 4px;
+export const ProdutoResultado = styled.View`
+  padding: 8px 0;
+  border-bottom-width: 1px;
+  border-bottom-color: #f3f4f6;
 `;
 
-export const TextoLinha = styled.Text`
-  color: #6b7280;
+export const NomeProduto = styled.Text`
+  color: #1f2937;
   font-size: 14px;
+  font-weight: 600;
+`;
+
+export const DetalhesProduto = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+`;
+
+export const QuantidadeProduto = styled.Text`
+  color: #6b7280;
+  font-size: 13px;
 `;
 
 export const ValorLinha = styled.Text`

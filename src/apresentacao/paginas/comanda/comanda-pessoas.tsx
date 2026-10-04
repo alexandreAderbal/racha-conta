@@ -2,7 +2,10 @@ import {
   BotaoPessoa,
   Input,
   Label,
+  LinhaPessoaControle,
   LinhaPessoas,
+  QuantidadeInput,
+  QuantidadeLabel,
   TextoPessoa,
   TextoPessoas,
 } from "./styles";
@@ -22,11 +25,26 @@ interface IProps {
 
 export default function ComandaPessoas({ item }: IProps) {
   const modalRef = useRef<ModalRef>(null);
-  const { pessoas, adicionarPessoa, marcarPessoa, marcarPessoas } =
-    useComanda();
+  const {
+    pessoas,
+    adicionarPessoa,
+    marcarPessoa,
+    marcarPessoas,
+    atualizarQuantidadeConsumida,
+  } = useComanda();
   const [nome, setNome] = useState("");
+  const [quantidadesDigitadas, setQuantidadesDigitadas] = useState<
+    Record<string, string>
+  >({});
+
+  function formatarQuantidade(quantidade: number) {
+    return quantidade.toLocaleString("pt-BR", {
+      maximumFractionDigits: 4,
+    });
+  }
 
   function abrirModal() {
+    setQuantidadesDigitadas({});
     modalRef.current?.titulo("Selecionar pessoas");
     modalRef.current?.abrir();
     marcarPessoas(item.pessoas);
@@ -41,6 +59,18 @@ export default function ComandaPessoas({ item }: IProps) {
 
   function selecionarPessoa(pessoa: PessoaDTO) {
     marcarPessoa(pessoa, item.descricao);
+  }
+
+  function salvarQuantidade(pessoa: PessoaDTO, valorDigitado: string) {
+    const quantidade = Number(valorDigitado.replace(",", "."));
+    if (valorDigitado.trim() && Number.isFinite(quantidade)) {
+      atualizarQuantidadeConsumida(item.descricao, pessoa.nome, quantidade);
+    }
+    setQuantidadesDigitadas((valores) => {
+      const atualizados = { ...valores };
+      delete atualizados[pessoa.nome];
+      return atualizados;
+    });
   }
 
   return (
@@ -76,29 +106,60 @@ export default function ComandaPessoas({ item }: IProps) {
           style={{ maxHeight: 300 }}
           keyboardShouldPersistTaps="always"
         >
-          {pessoas.map((pessoa, index) => {
-            return (
-              <BotaoPessoa
-                key={index}
-                selecionada={pessoa.selecionado || false}
-                onPress={() => selecionarPessoa(pessoa)}
-              >
-                <Icon
-                  nome={
-                    pessoa.selecionado
-                      ? "checkbox-marked"
-                      : "checkbox-blank-outline"
-                  }
-                  cor={
-                    pessoa.selecionado
-                      ? Theme.colors.primary
-                      : Theme.colors.textSecondary
-                  }
-                  size={24}
-                />
+          {pessoas.map((pessoa) => {
+            const pessoaDoItem = item.pessoas.find(
+              (pessoaItem) => pessoaItem.nome === pessoa.nome,
+            );
+            const selecionada = Boolean(pessoaDoItem);
 
-                <TextoPessoa>{pessoa.nome}</TextoPessoa>
-              </BotaoPessoa>
+            return (
+              <LinhaPessoaControle key={pessoa.nome}>
+                <BotaoPessoa
+                  selecionada={selecionada}
+                  onPress={() => selecionarPessoa(pessoa)}
+                >
+                  <Icon
+                    nome={
+                      selecionada
+                        ? "checkbox-marked"
+                        : "checkbox-blank-outline"
+                    }
+                    cor={
+                      selecionada
+                        ? Theme.colors.primary
+                        : Theme.colors.textSecondary
+                    }
+                    size={24}
+                  />
+
+                  <TextoPessoa>{pessoa.nome}</TextoPessoa>
+                </BotaoPessoa>
+
+                {selecionada && pessoaDoItem && (
+                  <>
+                    <QuantidadeLabel>Qtd.</QuantidadeLabel>
+                    <QuantidadeInput
+                      value={
+                        quantidadesDigitadas[pessoa.nome] ??
+                        formatarQuantidade(
+                          pessoaDoItem.quantidadeConsumida ?? 0,
+                        )
+                      }
+                      onChangeText={(valor) =>
+                        setQuantidadesDigitadas((valores) => ({
+                          ...valores,
+                          [pessoa.nome]: valor,
+                        }))
+                      }
+                      onEndEditing={({ nativeEvent }) =>
+                        salvarQuantidade(pessoa, nativeEvent.text)
+                      }
+                      keyboardType="decimal-pad"
+                      accessibilityLabel={`Quantidade consumida por ${pessoa.nome}`}
+                    />
+                  </>
+                )}
+              </LinhaPessoaControle>
             );
           })}
         </ScrollView>

@@ -13,11 +13,6 @@ export class OpenAIService {
   }
 
   async analisar(imagensBase64: string[]): Promise<ComandaDTO> {
-    if (__DEV__) {
-      console.warn("executando no modo DEV");
-      return COMANDA as ComandaDTO;
-    }
-
     if (!imagensBase64.length) {
       throw new Error("Nenhuma imagem foi enviada.");
     }
@@ -49,6 +44,7 @@ export class OpenAIService {
     if (!texto) {
       throw new Error("A OpenAI não retornou nenhum resultado.");
     }
+    console.log("texto", texto);
 
     try {
       const resultado = JSON.parse(texto) as ComandaDTO;

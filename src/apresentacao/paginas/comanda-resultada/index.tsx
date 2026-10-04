@@ -6,13 +6,15 @@ import {
   Avatar,
   LabelTotal,
   Linha,
-  LinhaValor,
+  DetalhesProduto,
+  NomeProduto,
   NomePessoa,
   PessoaIdentificacao,
+  ProdutoResultado,
+  QuantidadeProduto,
   ResumoTotal,
   Rodape,
   SucessoContainer,
-  TextoLinha,
   TituloSecao,
   TotalPessoa,
   ValorLinha,
@@ -30,9 +32,15 @@ export default function ComandaResultado() {
   const { dividirConta, compartilharResultado, divisao } = useDivisao();
   const { salvarComanda, comanda } = useComanda();
 
+  function formatarQuantidade(quantidade: number) {
+    return quantidade.toLocaleString("pt-BR", {
+      maximumFractionDigits: 4,
+    });
+  }
+
   useEffect(() => {
     if (comanda) dividirConta(comanda);
-  }, []);
+  }, [comanda]);
 
   return (
     <ContainerPage>
@@ -69,13 +77,18 @@ export default function ComandaResultado() {
                 </TotalPessoa>
               </CardTopo>
               <Linha />
-              {item.itens.map((produto) => (
-                <LinhaValor key={produto.id}>
-                  <TextoLinha>{produto.descricao}</TextoLinha>
-                  <ValorLinha>
-                    {NumberUtil.formatarValor(produto.valor)}
-                  </ValorLinha>
-                </LinhaValor>
+              {item.itens.map((produto, index) => (
+                <ProdutoResultado key={`${produto.id}_${index}`}>
+                  <NomeProduto>{produto.descricao}</NomeProduto>
+                  <DetalhesProduto>
+                    <QuantidadeProduto>
+                      Quantidade: {formatarQuantidade(produto.quantidade)}
+                    </QuantidadeProduto>
+                    <ValorLinha>
+                      {NumberUtil.formatarValor(produto.valor)}
+                    </ValorLinha>
+                  </DetalhesProduto>
+                </ProdutoResultado>
               ))}
             </Card>
           )}

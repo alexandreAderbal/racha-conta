@@ -2,6 +2,7 @@ export class PessoaDTO {
   id?: number | null;
   nome!: string;
   selecionado?: boolean;
+  quantidadeConsumida?: number;
 
   static criar(nome: string): PessoaDTO {
     const pessoa = new PessoaDTO();

@@ -88,7 +88,7 @@ export function Home({ navigation }: Props) {
           <SelecionarArquivos />
           <BTN.Secondary
             action={handleMyAccounts}
-            label="Minhas contas"
+            label="Minhas comandas"
             icon="history"
           />
         </Actions>

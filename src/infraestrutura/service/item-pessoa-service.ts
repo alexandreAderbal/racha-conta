@@ -11,8 +11,13 @@ export class ItemPessoaService {
   async salvar(
     idItem: number,
     idPessoa: number,
+    quantidadeConsumida: number,
   ): Promise<number> {
-    const modelo = ItemPessoaMapper.toModelo(idItem, idPessoa);
+    const modelo = ItemPessoaMapper.toModelo(
+      idItem,
+      idPessoa,
+      quantidadeConsumida,
+    );
     return this.repositorio.inserir(modelo);
   }
 }

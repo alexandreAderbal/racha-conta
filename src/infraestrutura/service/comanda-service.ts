@@ -31,13 +31,19 @@ export class ComandaService {
         for (const item of dto.itens) {
           // O ID do item reconhecido pela foto não é um ID do SQLite.
           const idItem = await this.itemService.salvar(item, idComanda);
+          const pessoas = item.pessoas || [];
 
-          for (const pessoa of item.pessoas) {
+          for (const pessoa of pessoas) {
             const idPessoa = await this.pessoaService.buscarOrSalvar(
               pessoa,
               idComanda,
             );
-            await this.itemPessoaService.salvar(idItem, idPessoa);
+            await this.itemPessoaService.salvar(
+              idItem,
+              idPessoa,
+              pessoa.quantidadeConsumida ??
+                item.quantidade / Math.max(pessoas.length, 1),
+            );
           }
         }
 

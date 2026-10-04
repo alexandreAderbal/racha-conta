@@ -22,12 +22,11 @@ export function useDivisao() {
           return [];
         }
 
-        const quantidadePessoas = item.pessoas.length;
+        item.pessoas.forEach(({ nome, quantidadeConsumida }) => {
+          const quantidadeDaPessoa =
+            quantidadeConsumida ?? item.quantidade / item.pessoas.length;
+          if (quantidadeDaPessoa <= 0) return;
 
-        // Divide o valor do item entre as pessoas
-        const valorPorPessoa = item.valorTotal / quantidadePessoas;
-
-        item.pessoas.forEach(({ nome }) => {
           let pessoa = resultado.find((p) => p.nome === nome);
 
           if (!pessoa) {
@@ -42,14 +41,19 @@ export function useDivisao() {
             resultado.push(pessoa);
           }
 
+          const valorDaPessoa =
+            item.quantidade > 0
+              ? item.valorTotal * (quantidadeDaPessoa / item.quantidade)
+              : 0;
+
           pessoa.itens.push({
             id: item.id || 0,
             descricao: item.descricao,
-            quantidade: item.quantidade,
-            valor: valorPorPessoa,
+            quantidade: quantidadeDaPessoa,
+            valor: valorDaPessoa,
           });
 
-          pessoa.subtotal += valorPorPessoa;
+          pessoa.subtotal += valorDaPessoa;
         });
       });
 
@@ -58,7 +62,7 @@ export function useDivisao() {
         pessoa.taxaServicoGarcom =
           pessoa.subtotal * (comanda.taxaServicoGarcom / 100);
 
-        pessoa.total = pessoa.subtotal + comanda.taxaServicoGarcom;
+        pessoa.total = pessoa.subtotal + pessoa.taxaServicoGarcom;
       });
 
       setDivisao(resultado);
@@ -83,7 +87,7 @@ export function useDivisao() {
       mensagem += `👤 ${pessoa.nome}\n`;
 
       pessoa.itens.forEach((item) => {
-        mensagem += `• ${item.descricao}: ${NumberUtil.formatarValor(item.valor)}\n`;
+        mensagem += `• ${item.quantidade} x ${item.descricao}: ${NumberUtil.formatarValor(item.valor)}\n`;
       });
 
       mensagem += `\n`;

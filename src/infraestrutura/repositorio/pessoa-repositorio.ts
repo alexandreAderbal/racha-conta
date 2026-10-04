@@ -12,7 +12,7 @@ export class PessoaRepository extends RepositorioBase<PessoaModelo> {
     const db = await this.getDb();
 
     const sql = `
-    SELECT p.id, p.nome
+    SELECT p.id, p.nome, ip.quantidade_consumida AS quantidadeConsumida
     FROM pessoas p
     INNER JOIN item_pessoas ip
       ON ip.id_pessoa = p.id
