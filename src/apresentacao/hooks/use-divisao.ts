@@ -7,14 +7,15 @@ import { useState } from "react";
 
 export function useDivisao() {
   const [divisao, setDivisao] = useState<PessoaDivisaoDTO[]>([]);
+  const [totalComanda, setTotalComanda] = useState<number>(0);
   const { ativarSpinner, desativarSpinner } = useSpinner();
 
   const dividirConta = (comanda: ComandaDTO) => {
     try {
       ativarSpinner("Dividindo a comanda");
       const resultado: PessoaDivisaoDTO[] = [];
-
       if (!comanda) return [];
+      var totalAux = comanda.total;
 
       comanda.itens.forEach((item) => {
         // Item ainda não foi atribuído a ninguém
@@ -70,10 +71,11 @@ export function useDivisao() {
             valor: pessoa.taxaServicoGarcom,
           });
         }
-
         pessoa.total = pessoa.subtotal + pessoa.taxaServicoGarcom;
+        totalAux = pessoa.taxaServicoGarcom + totalAux;
       });
 
+      setTotalComanda(totalAux);
       setDivisao(resultado);
     } finally {
       desativarSpinner();
@@ -102,7 +104,7 @@ export function useDivisao() {
         .filter((item) => item.id !== -1)
         .forEach((item) => {
           const quantidade = item.quantidade.toLocaleString("pt-BR", {
-            maximumFractionDigits: 4,
+            maximumFractionDigits: 2,
           });
           linhas.push(
             `  • ${quantidade} × ${item.descricao} — ${NumberUtil.formatarValor(item.valor)}`,
@@ -117,7 +119,9 @@ export function useDivisao() {
         );
       }
 
-      linhas.push(`✅ Total a pagar: ${NumberUtil.formatarValor(pessoa.total)}`);
+      linhas.push(
+        `✅ Total a pagar: ${NumberUtil.formatarValor(pessoa.total)}`,
+      );
       linhas.push(separador);
     });
 
@@ -136,5 +140,6 @@ export function useDivisao() {
     compartilharResultado,
     dividirConta,
     divisao,
+    totalComanda,
   };
 }

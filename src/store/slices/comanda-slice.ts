@@ -26,6 +26,44 @@ const ComandaSlice = createSlice({
     atualizarPessoas(state, action: PayloadAction<PessoaDTO>) {
       state.pessoas.push(action.payload);
     },
+    removerPessoa(state, action: PayloadAction<string>) {
+      const nome = action.payload;
+      state.pessoas = state.pessoas.filter((pessoa) => pessoa.nome !== nome);
+
+      state.comanda?.itens.forEach((item) => {
+        const pessoaRemovida = item.pessoas.some(
+          (pessoa) => pessoa.nome === nome,
+        );
+        if (!pessoaRemovida) return;
+
+        const quantidadeAtribuida = item.pessoas.reduce(
+          (total, pessoa) => total + (pessoa.quantidadeConsumida ?? 0),
+          0,
+        );
+        const primeiraQuantidade = item.pessoas[0]?.quantidadeConsumida ?? 0;
+        const quantidadesIguais =
+          item.pessoas.length === 0 ||
+          (Math.abs(quantidadeAtribuida - item.quantidade) < 0.00001 &&
+            item.pessoas.every(
+              (pessoa) =>
+                Math.abs(
+                  (pessoa.quantidadeConsumida ?? 0) - primeiraQuantidade,
+                ) < 0.00001,
+            ));
+
+        item.pessoas = item.pessoas.filter((pessoa) => pessoa.nome !== nome);
+
+        if (quantidadesIguais) {
+          const quantidadePorPessoa = item.pessoas.length
+            ? item.quantidade / item.pessoas.length
+            : 0;
+          item.pessoas = item.pessoas.map((pessoa) => ({
+            ...pessoa,
+            quantidadeConsumida: quantidadePorPessoa,
+          }));
+        }
+      });
+    },
     selecionarPessoa(state, action: PayloadAction<PessoaDTO>) {
       state.pessoas = state.pessoas.map((p) =>
         p.nome === action.payload.nome
@@ -161,6 +199,7 @@ export const {
   atualizarQuantidadePessoaItem,
   limparLimpar,
   atualizarPessoas,
+  removerPessoa,
 } = ComandaSlice.actions;
 
 export default ComandaSlice.reducer;

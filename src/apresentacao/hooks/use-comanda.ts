@@ -8,6 +8,7 @@ import {
   atualizarComanda,
   atualizarQuantidadePessoaItem,
   atualizarPessoas,
+  removerPessoa as removerPessoaAction,
   removerSelecionarPessoas,
   selecionarPessoa,
   selecionarPessoas,
@@ -39,6 +40,10 @@ export function useComanda() {
 
   const marcarPessoas = (pessoas: PessoaDTO[]) => {
     dispatch(selecionarPessoas(pessoas));
+  };
+
+  const removerPessoa = (nome: string) => {
+    dispatch(removerPessoaAction(nome));
   };
 
   const atualizarQuantidadeConsumida = (
@@ -79,6 +84,7 @@ export function useComanda() {
     adicionarPessoa,
     marcarPessoa,
     marcarPessoas,
+    removerPessoa,
     atualizarQuantidadeConsumida,
     limparPessoasMarcadas,
     atualizarTaxaGarcom,

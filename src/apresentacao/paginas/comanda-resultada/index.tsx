@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import {
   Avatar,
   LabelTotal,
-  Linha,
   DetalhesProduto,
   NomeProduto,
   NomePessoa,
@@ -29,12 +28,13 @@ import { Icon } from "@Componentes/icon";
 import { BTN } from "@Componentes/btns";
 
 export default function ComandaResultado() {
-  const { dividirConta, compartilharResultado, divisao } = useDivisao();
+  const { dividirConta, compartilharResultado, divisao, totalComanda } =
+    useDivisao();
   const { salvarComanda, comanda } = useComanda();
 
   function formatarQuantidade(quantidade: number) {
     return quantidade.toLocaleString("pt-BR", {
-      maximumFractionDigits: 4,
+      maximumFractionDigits: 2,
     });
   }
 
@@ -53,7 +53,7 @@ export default function ComandaResultado() {
         </SucessoContainer>
         <ResumoTotal>
           <LabelTotal>Total da conta</LabelTotal>
-          <ValorTotal>{NumberUtil.formatarValor(comanda?.total)}</ValorTotal>
+          <ValorTotal>{NumberUtil.formatarValor(totalComanda)}</ValorTotal>
         </ResumoTotal>
 
         <TituloSecao>Divisão por pessoa</TituloSecao>
@@ -78,7 +78,6 @@ export default function ComandaResultado() {
                   {NumberUtil.formatarValor(item.total)}
                 </TotalPessoa>
               </CardTopo>
-              <Linha />
               {item.itens.map((produto, index) => (
                 <ProdutoResultado key={`${produto.id}_${index}`}>
                   <NomeProduto>{produto.descricao}</NomeProduto>

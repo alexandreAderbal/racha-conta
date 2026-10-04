@@ -3,7 +3,7 @@ import ContainerFooter from "@Componentes/containers/container-footer";
 import { useNavigation } from "@react-navigation/native";
 import Modal, { ModalRef } from "@Componentes/modal";
 import { useRef, useState } from "react";
-import { Actions, Input, Label } from "./styles";
+import { Input, Label } from "./styles";
 import { BTN } from "@Componentes/btns";
 
 interface IProps {
@@ -15,6 +15,8 @@ export default function Calcular({ action }: IProps) {
   const modalRef = useRef<ModalRef>(null);
 
   const [percentual, setPerncentual] = useState<string>("0");
+
+  modalRef.current?.titulo("Serviço garçom");
 
   return (
     <ContainerFooter>
@@ -34,6 +36,7 @@ export default function Calcular({ action }: IProps) {
           placeholderTextColor="#9CA3AF"
           keyboardType="decimal-pad"
           inputMode="numeric"
+          maxLength={2}
           returnKeyType="done"
           onBlur={() => action(percentual)}
         />

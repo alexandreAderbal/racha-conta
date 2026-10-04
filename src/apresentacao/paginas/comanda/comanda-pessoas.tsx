@@ -11,7 +11,7 @@ import {
 } from "./styles";
 import Modal, { ModalRef } from "@Componentes/modal";
 import { PessoaDTO } from "@Infra-dto/pessoa-dto";
-import { ScrollView, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { ItemDTO } from "@Infra-dto/item-dto";
 import { useRef, useState } from "react";
 import { BTN } from "@Componentes/btns";
@@ -30,6 +30,7 @@ export default function ComandaPessoas({ item }: IProps) {
     adicionarPessoa,
     marcarPessoa,
     marcarPessoas,
+    removerPessoa,
     atualizarQuantidadeConsumida,
   } = useComanda();
   const [nome, setNome] = useState("");
@@ -39,7 +40,7 @@ export default function ComandaPessoas({ item }: IProps) {
 
   function formatarQuantidade(quantidade: number) {
     return quantidade.toLocaleString("pt-BR", {
-      maximumFractionDigits: 4,
+      maximumFractionDigits: 2,
     });
   }
 
@@ -59,6 +60,28 @@ export default function ComandaPessoas({ item }: IProps) {
 
   function selecionarPessoa(pessoa: PessoaDTO) {
     marcarPessoa(pessoa, item.descricao);
+  }
+
+  function confirmarRemocaoPessoa(pessoa: PessoaDTO) {
+    Alert.alert(
+      `Remover ${pessoa.nome}?`,
+      "A pessoa será removida da lista e de todos os itens da comanda.",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Remover",
+          style: "destructive",
+          onPress: () => {
+            removerPessoa(pessoa.nome);
+            setQuantidadesDigitadas((valores) => {
+              const atualizados = { ...valores };
+              delete atualizados[pessoa.nome];
+              return atualizados;
+            });
+          },
+        },
+      ],
+    );
   }
 
   function salvarQuantidade(pessoa: PessoaDTO, valorDigitado: string) {
@@ -117,12 +140,12 @@ export default function ComandaPessoas({ item }: IProps) {
                 <BotaoPessoa
                   selecionada={selecionada}
                   onPress={() => selecionarPessoa(pessoa)}
+                  onLongPress={() => confirmarRemocaoPessoa(pessoa)}
+                  accessibilityHint="Toque longo para remover esta pessoa da comanda"
                 >
                   <Icon
                     nome={
-                      selecionada
-                        ? "checkbox-marked"
-                        : "checkbox-blank-outline"
+                      selecionada ? "checkbox-marked" : "checkbox-blank-outline"
                     }
                     cor={
                       selecionada

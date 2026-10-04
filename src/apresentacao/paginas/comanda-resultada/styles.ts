@@ -8,8 +8,8 @@ export const SucessoContainer = styled.View`
 export const ResumoTotal = styled.View`
   background-color: #0f766e;
   border-radius: 8px;
-  padding: 8px 12px;
-  margin-bottom: 12px;
+  padding: 4px 12px;
+  margin-bottom: 8px;
 `;
 
 export const LabelTotal = styled.Text`
@@ -28,7 +28,7 @@ export const TituloSecao = styled.Text`
   font-size: 18px;
   font-weight: 700;
   color: #111827;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 `;
 
 export const PessoaIdentificacao = styled.View`
@@ -58,16 +58,11 @@ export const TotalPessoa = styled.Text`
   color: #0f766e;
 `;
 
-export const Linha = styled.View`
-  height: 1px;
-  background-color: #e5e7eb;
-  margin: 6px 0;
-`;
-
 export const ProdutoResultado = styled.View`
-  padding: 8px 0;
-  border-bottom-width: 1px;
-  border-bottom-color: #f3f4f6;
+  padding: 2px 0;
+  margin-top: 4px;
+  border-top-width: 1px;
+  border-top-color: #e5e7eb;
 `;
 
 export const NomeProduto = styled.Text`
@@ -80,7 +75,7 @@ export const DetalhesProduto = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 2px;
 `;
 
 export const QuantidadeProduto = styled.Text`

@@ -21,5 +21,5 @@ export const TituloSucesso = styled.Text`
 export const Descricao = styled.Text`
   font-size: 14px;
   color: #6b7280;
-  margin-top: 5px;
+  margin-top: 2px;
 `;
