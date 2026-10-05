@@ -6,7 +6,13 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { ModalContainer, ModalHeader, ModalTitulo, Overlay } from "./styles";
+import {
+  ModalBackdrop,
+  ModalContainer,
+  ModalHeader,
+  ModalTitulo,
+  Overlay,
+} from "./styles";
 import { Icon } from "@Componentes/icon";
 
 export type ModalRef = {
@@ -23,6 +29,7 @@ const Modal = forwardRef<ModalRef, ModalProps>(({ children }, ref) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [titulo, setTitulo] = useState("Adicionar pessoa");
+  const fechar = () => setModalVisible(false);
 
   useImperativeHandle(ref, () => ({
     abrir() {
@@ -43,18 +50,20 @@ const Modal = forwardRef<ModalRef, ModalProps>(({ children }, ref) => {
       visible={modalVisible}
       transparent
       animationType="slide"
-      onRequestClose={() => setModalVisible(false)}
+      onRequestClose={fechar}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
+      <KeyboardAvoidingView style={{ flex: 1 }}>
         <Overlay>
+          <ModalBackdrop
+            onPress={fechar}
+            accessibilityRole="button"
+            accessibilityLabel="Fechar modal"
+          />
           <ModalContainer>
             <ModalHeader>
               <ModalTitulo>{titulo}</ModalTitulo>
 
-              <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <TouchableOpacity onPress={fechar}>
                 <Icon nome="close" size={26} cor="#374151" />
               </TouchableOpacity>
             </ModalHeader>

@@ -78,3 +78,29 @@ export const FooterText = styled.Text`
   color: #79aaa7;
   font-size: 12px;
 `;
+
+export const PixLabel = styled.Text`
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+`;
+
+export const PixInput = styled.TextInput`
+  min-height: 48px;
+  border-width: 1px;
+  border-color: #d1d5db;
+  border-radius: 8px;
+  padding: 0 16px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #111827;
+  background-color: #f9fafb;
+`;
+
+export const PixDescricao = styled.Text`
+  font-size: 13px;
+  line-height: 18px;
+  color: #6b7280;
+  margin-bottom: 14px;
+`;

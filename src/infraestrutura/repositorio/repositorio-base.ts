@@ -120,10 +120,10 @@ export abstract class RepositorioBase<T extends { id?: number }> {
   // ATUALIZAR
   // =========================
 
-  protected async atualizar(
+  public async atualizar(
     id: number,
     dados: Record<string, unknown>,
-  ): Promise<void> {
+  ): Promise<number> {
     const db = await dbPromise;
 
     const campos = Object.keys(dados);
@@ -137,7 +137,13 @@ export abstract class RepositorioBase<T extends { id?: number }> {
       WHERE id = ?
     `;
     this.logSQL(sql);
-    await db.runAsync(sql, ...(valores as SQLiteBindValue[]), id);
+    const resultado = await db.runAsync(
+      sql,
+      ...(valores as SQLiteBindValue[]),
+      id,
+    );
+
+    return resultado.lastInsertRowId;
   }
 
   // =========================

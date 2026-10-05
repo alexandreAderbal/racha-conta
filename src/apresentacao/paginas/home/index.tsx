@@ -17,6 +17,7 @@ import { Icon } from "@Componentes/icon";
 import ContainerPage from "@Componentes/containers/container-page";
 import { Centralizado } from "@Componentes/containers/containers";
 import { SelecionarArquivos } from "./selecionar-arquivos";
+import { PixConfiguracao } from "./pix-configuracao";
 
 type Props = {
   navigation: any;
@@ -89,8 +90,9 @@ export function Home({ navigation }: Props) {
           <BTN.Secondary
             action={handleMyAccounts}
             label="Minhas comandas"
-            icon="history"
+            icon="clipboard-text-outline"
           />
+          <PixConfiguracao />
         </Actions>
       </Centralizado>
 

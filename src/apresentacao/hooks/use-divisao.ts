@@ -4,11 +4,14 @@ import { ComandaDTO } from "@Infra-dto/comanda-dto";
 import { useSpinner } from "./use-spinner";
 import { Share } from "react-native";
 import { useState } from "react";
+import { DocumentoUtil } from "src/core/utils/documento-util";
+import { useConfiguracao } from "./use-configuracao";
 
 export function useDivisao() {
   const [divisao, setDivisao] = useState<PessoaDivisaoDTO[]>([]);
   const [totalComanda, setTotalComanda] = useState<number>(0);
   const { ativarSpinner, desativarSpinner } = useSpinner();
+  const { buscarPix } = useConfiguracao();
 
   const dividirConta = (comanda: ComandaDTO) => {
     try {
@@ -63,6 +66,7 @@ export function useDivisao() {
         pessoa.taxaServicoGarcom =
           pessoa.subtotal * (comanda.taxaServicoGarcom / 100);
 
+        console.log("comanda.taxaServicoGarcom", comanda.taxaServicoGarcom);
         if (comanda.taxaServicoGarcom > 0) {
           pessoa.itens.push({
             id: -1,
@@ -87,53 +91,62 @@ export function useDivisao() {
       return;
     }
 
-    const separador = "────────────────────";
+    const separador = "────────────────────────";
+    const resumoPorPessoa = divisao
+      .map((pessoa) =>
+        formatarPessoaParaCompartilhar(pessoa, comanda.taxaServicoGarcom),
+      )
+      .join(`\n\n${separador}\n\n`);
     const linhas = [
-      "🍽️ RACHA CONTA",
+      "RACHA CONTA",
       `Mesa: ${comanda.mesa}`,
-      `Total da conta: ${NumberUtil.formatarValor(comanda.total)}`,
+      `Total geral: ${NumberUtil.formatarValor(totalComanda)}`,
       "",
-      "👥 DIVISÃO POR PESSOA",
+      "DIVISÃO POR PESSOA",
       separador,
+      resumoPorPessoa,
     ];
 
-    divisao.forEach((pessoa) => {
-      linhas.push(`👤 ${pessoa.nome}`);
-
-      pessoa.itens
-        .filter((item) => item.id !== -1)
-        .forEach((item) => {
-          const quantidade = item.quantidade.toLocaleString("pt-BR", {
-            maximumFractionDigits: 2,
-          });
-          linhas.push(
-            `  • ${quantidade} × ${item.descricao} — ${NumberUtil.formatarValor(item.valor)}`,
-          );
-        });
-
-      linhas.push(`Subtotal: ${NumberUtil.formatarValor(pessoa.subtotal)}`);
-
-      if (comanda.taxaServicoGarcom > 0) {
-        linhas.push(
-          `Taxa do garçom (${comanda.taxaServicoGarcom}%): ${NumberUtil.formatarValor(pessoa.taxaServicoGarcom)}`,
-        );
+    try {
+      const chavePix = await buscarPix();
+      console.log("chavePix", chavePix);
+      if (chavePix) {
+        linhas.push("", "PAGAMENTO VIA PIX", `Chave do recebedor: ${chavePix}`);
       }
 
-      linhas.push(
-        `✅ Total a pagar: ${NumberUtil.formatarValor(pessoa.total)}`,
-      );
-      linhas.push(separador);
-    });
-
-    const mensagem = linhas.join("\n");
-
-    try {
-      await Share.share({
-        message: mensagem,
-      });
+      await Share.share({ message: linhas.join("\n") });
     } catch (error) {
       console.error("Erro ao compartilhar resultado:", error);
     }
+  };
+
+  const formatarPessoaParaCompartilhar = (
+    pessoa: PessoaDivisaoDTO,
+    taxaServicoGarcom: number,
+  ) => {
+    const linhas = [`Pessoa: ${pessoa.nome}`];
+
+    pessoa.itens
+      .filter((item) => item.id !== -1)
+      .forEach((item) => {
+        const quantidade = item.quantidade.toLocaleString("pt-BR", {
+          maximumFractionDigits: 2,
+        });
+        linhas.push(
+          `  • ${quantidade} × ${item.descricao} — ${NumberUtil.formatarValor(
+            item.valor,
+          )}`,
+        );
+      });
+
+    if (taxaServicoGarcom > 0) {
+      linhas.push(
+        ` • Taxa do garçom (${taxaServicoGarcom}%): ${NumberUtil.formatarValor(pessoa.taxaServicoGarcom)}`,
+      );
+    }
+
+    linhas.push(`  TOTAL A PAGAR: ${NumberUtil.formatarValor(pessoa.total)}`);
+    return linhas.join("\n");
   };
 
   return {

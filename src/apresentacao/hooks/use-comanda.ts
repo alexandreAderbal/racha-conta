@@ -25,6 +25,7 @@ export function useComanda() {
   };
 
   const atualizarTaxaGarcom = (value: string) => {
+    console.log("value", value);
     if (comanda)
       adicionarComanda({ ...comanda, taxaServicoGarcom: Number(value) });
   };

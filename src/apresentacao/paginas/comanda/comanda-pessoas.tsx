@@ -46,7 +46,7 @@ export default function ComandaPessoas({ item }: IProps) {
 
   function abrirModal() {
     setQuantidadesDigitadas({});
-    modalRef.current?.titulo("Selecionar pessoas");
+    modalRef.current?.titulo(`${item.quantidade} - ${item.descricao}`);
     modalRef.current?.abrir();
     marcarPessoas(item.pessoas);
   }
@@ -123,7 +123,7 @@ export default function ComandaPessoas({ item }: IProps) {
       />
 
       <Modal ref={modalRef}>
-        <Label>Pessoas da mesa</Label>
+        {pessoas.length > 0 && <Label>Pessoas da mesa</Label>}
 
         <ScrollView
           style={{ maxHeight: 300 }}

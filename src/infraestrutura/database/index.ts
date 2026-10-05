@@ -1,6 +1,6 @@
 import * as SQLite from "expo-sqlite";
 
-export const dbPromise = SQLite.openDatabaseAsync("racha_conta_03.db");
+export const dbPromise = SQLite.openDatabaseAsync("racha_conta_05.db");
 
 export async function inicializarBanco() {
   console.log("Iniciando criação do banco e tabelas.");
@@ -16,6 +16,12 @@ export async function inicializarBanco() {
       status TEXT NOT NULL DEFAULT 'EM_ANDAMENTO',
       criado_em TEXT NOT NULL,
       finalizada_em TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS configuracoes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      chave TEXT NOT NULL UNIQUE,
+      valor TEXT NOT NULL
     );
 
     CREATE TABLE IF NOT EXISTS pessoas (
@@ -53,26 +59,5 @@ export async function inicializarBanco() {
     );
   `);
 
-  const colunasItemPessoas = await db.getAllAsync<{ name: string }>(
-    "PRAGMA table_info(item_pessoas)",
-  );
-  if (!colunasItemPessoas.some(({ name }) => name === "quantidade_consumida")) {
-    await db.execAsync(`
-      ALTER TABLE item_pessoas
-      ADD COLUMN quantidade_consumida REAL NOT NULL DEFAULT 1;
-
-      UPDATE item_pessoas
-      SET quantidade_consumida = COALESCE(
-        (
-          SELECT itens.quantidade / COUNT(*)
-          FROM itens
-          INNER JOIN item_pessoas AS relacao
-            ON relacao.id_item = itens.id
-          WHERE itens.id = item_pessoas.id_item
-        ),
-        1
-      );
-    `);
-  }
   console.log("Criação do banco e tabelas finalizadas.");
 }

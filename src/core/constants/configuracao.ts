@@ -1,0 +1,3 @@
+export const CONFIGURACAO_CONSTANT = {
+  CHAVE_PIX: "CHAVE_PIX",
+};

@@ -6,7 +6,7 @@ export function SelecionarArquivos() {
 
   return (
     <BTN.Primary
-      icon="file-multiple-outline"
+      icon="upload-box-outline"
       action={selecionarArquivos}
       label="Selecione arquivo(s)"
     />
