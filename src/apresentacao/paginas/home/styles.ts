@@ -1,3 +1,4 @@
+import { Theme } from "@Theme";
 import styled from "styled-components/native";
 
 export const LogoArea = styled.View`
@@ -12,6 +13,7 @@ export const LogoIcon = styled.View`
 `;
 
 export const LogoText = styled.Text`
+  font-family: ${Theme.fonts.extraBold};
   color: #ffffff;
   font-size: 48px;
   line-height: 48px;
@@ -20,10 +22,12 @@ export const LogoText = styled.Text`
 `;
 
 export const LogoTextHighlight = styled.Text`
+  font-family: ${Theme.fonts.extraBold};
   color: #00d4b4;
 `;
 
 export const Subtitle = styled.Text`
+  font-family: ${Theme.fonts.regular};
   color: #d7eeee;
   font-size: 16px;
   line-height: 23px;
@@ -55,6 +59,7 @@ export const FeatureIcon = styled.View`
 `;
 
 export const FeatureText = styled.Text`
+  font-family: ${Theme.fonts.semiBold};
   color: #d7eeee;
   font-size: 12px;
   font-weight: 600;
@@ -75,11 +80,13 @@ export const Footer = styled.View`
 `;
 
 export const FooterText = styled.Text`
+  font-family: ${Theme.fonts.regular};
   color: #79aaa7;
   font-size: 12px;
 `;
 
 export const PixLabel = styled.Text`
+  font-family: ${Theme.fonts.semiBold};
   font-size: 14px;
   font-weight: 600;
   color: #374151;
@@ -87,6 +94,7 @@ export const PixLabel = styled.Text`
 `;
 
 export const PixInput = styled.TextInput`
+  font-family: ${Theme.fonts.regular};
   min-height: 48px;
   border-width: 1px;
   border-color: #d1d5db;
@@ -99,6 +107,7 @@ export const PixInput = styled.TextInput`
 `;
 
 export const PixDescricao = styled.Text`
+  font-family: ${Theme.fonts.regular};
   font-size: 13px;
   line-height: 18px;
   color: #6b7280;

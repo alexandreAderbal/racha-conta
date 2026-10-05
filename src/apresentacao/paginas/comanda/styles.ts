@@ -6,6 +6,7 @@ export const MesaInfo = styled.View`
 `;
 
 export const MesaTitulo = styled.Text`
+  font-family: ${Theme.fonts.extraBold};
   font-size: 24px;
   font-weight: 800;
   color: ${Theme.colors.text};
@@ -26,11 +27,13 @@ export const ResumoItem = styled.View`
 `;
 
 export const ResumoLabel = styled.Text`
+  font-family: ${Theme.fonts.regular};
   font-size: 12px;
   color: ${Theme.colors.textSecondary};
 `;
 
 export const ResumoValor = styled.Text`
+  font-family: ${Theme.fonts.extraBold};
   margin-top: 4px;
   font-size: 18px;
   font-weight: 800;
@@ -44,6 +47,7 @@ export const ResumoDivisor = styled.View`
 `;
 
 export const TituloSecao = styled.Text`
+  font-family: ${Theme.fonts.bold};
   margin: 0 20px 10px;
   font-size: 17px;
   font-weight: 700;
@@ -65,18 +69,21 @@ export const InfoProduto = styled.View`
 `;
 
 export const Descricao = styled.Text`
+  font-family: ${Theme.fonts.bold};
   font-size: 16px;
   font-weight: 700;
   color: ${Theme.colors.text};
 `;
 
 export const Quantidade = styled.Text`
+  font-family: ${Theme.fonts.regular};
   margin-top: 4px;
   font-size: 13px;
   color: ${Theme.colors.textSecondary};
 `;
 
 export const Valor = styled.Text`
+  font-family: ${Theme.fonts.extraBold};
   font-size: 16px;
   font-weight: 800;
   color: ${Theme.colors.text};
@@ -94,6 +101,7 @@ export const LinhaPessoas = styled.View`
 `;
 
 export const TextoPessoas = styled.Text`
+  font-family: ${Theme.fonts.regular};
   flex: 1;
   margin-left: 8px;
   font-size: 13px;
@@ -121,12 +129,14 @@ export const ModalHeader = styled.View`
 `;
 
 export const ModalTitulo = styled.Text`
+  font-family: ${Theme.fonts.bold};
   font-size: 21px;
   font-weight: 700;
   color: #111827;
 `;
 
 export const Label = styled.Text`
+  font-family: ${Theme.fonts.semiBold};
   font-size: 14px;
   font-weight: 600;
   color: #374151;
@@ -134,6 +144,7 @@ export const Label = styled.Text`
 `;
 
 export const Input = styled.TextInput`
+  font-family: ${Theme.fonts.regular};
   height: 48px;
   border-width: 1px;
   border-color: #d1d5db;
@@ -166,12 +177,14 @@ export const LinhaPessoaControle = styled.View`
 `;
 
 export const QuantidadeLabel = styled.Text`
+  font-family: ${Theme.fonts.regular};
   margin-left: 8px;
   font-size: 13px;
   color: ${Theme.colors.textSecondary};
 `;
 
 export const QuantidadeInput = styled.TextInput`
+  font-family: ${Theme.fonts.regular};
   width: 64px;
   height: 42px;
   margin-left: 6px;
@@ -186,6 +199,7 @@ export const QuantidadeInput = styled.TextInput`
 `;
 
 export const TextoPessoa = styled.Text`
+  font-family: ${Theme.fonts.semiBold};
   margin-left: 12px;
   font-size: 16px;
   font-weight: 600;
@@ -207,6 +221,7 @@ export const PendenciasLista = styled.View`
 `;
 
 export const PendenciasTitulo = styled.Text`
+  font-family: ${Theme.fonts.extraBold};
   margin-bottom: 8px;
   color: #64748b;
   font-size: 12px;
@@ -215,6 +230,7 @@ export const PendenciasTitulo = styled.Text`
 `;
 
 export const PendenciaItem = styled.Text`
+  font-family: ${Theme.fonts.regular};
   padding: 4px 0;
   color: #334155;
   font-size: 14px;

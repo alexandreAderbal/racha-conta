@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { Theme } from "@Theme";
 
 type BtnProps = {
   bg: string;
@@ -22,6 +23,7 @@ type TxtProps = {
 };
 
 export const BTNTexto = styled.Text<TxtProps>`
+  font-family: ${Theme.fonts.bold};
   color: ${({ cor }) => cor};
   font-size: 16px;
   font-weight: 700;

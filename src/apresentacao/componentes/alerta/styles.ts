@@ -41,6 +41,7 @@ export const IconeFundo = styled.View<IconeFundoProps>`
 `;
 
 export const Titulo = styled.Text`
+  font-family: ${Theme.fonts.extraBold};
   color: ${Theme.colors.text};
   font-size: 20px;
   font-weight: 800;
@@ -48,6 +49,7 @@ export const Titulo = styled.Text`
 `;
 
 export const Mensagem = styled.Text`
+  font-family: ${Theme.fonts.regular};
   margin-top: 8px;
   color: ${Theme.colors.textSecondary};
   font-size: 15px;
@@ -82,6 +84,7 @@ export const BotaoPrincipal = styled.Pressable<BotaoPrincipalProps>`
 `;
 
 export const TextoBotaoPrincipal = styled.Text`
+  font-family: ${Theme.fonts.bold};
   color: ${Theme.colors.white};
   font-size: 15px;
   font-weight: 700;
@@ -99,6 +102,7 @@ export const BotaoSecundario = styled.Pressable`
 `;
 
 export const TextoBotaoSecundario = styled.Text`
+  font-family: ${Theme.fonts.bold};
   color: ${Theme.colors.text};
   font-size: 15px;
   font-weight: 700;

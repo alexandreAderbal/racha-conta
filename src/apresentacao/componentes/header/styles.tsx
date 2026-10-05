@@ -49,6 +49,7 @@ export const Conteudo = styled.View`
 `;
 
 export const Titulo = styled.Text`
+  font-family: ${Theme.fonts.bold};
   top: 6px;
   font-size: 19px;
   font-weight: 700;

@@ -41,6 +41,7 @@ export const IconArea = styled.View`
 `;
 
 export const Mensagem = styled.Text`
+  font-family: ${Theme.fonts.bold};
   font-size: 18px;
   font-weight: 700;
   color: #ffffff;
@@ -48,11 +49,13 @@ export const Mensagem = styled.Text`
 `;
 
 export const Pontos = styled.Text`
+  font-family: ${Theme.fonts.extraBold};
   color: ${Theme.colors.primary};
   font-weight: 800;
 `;
 
 export const SubMensagem = styled.Text`
+  font-family: ${Theme.fonts.regular};
   margin-top: 8px;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.75);

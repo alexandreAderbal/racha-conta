@@ -1,3 +1,4 @@
+import { Theme } from "@Theme";
 import styled from "styled-components/native";
 
 export const IconCenter = styled.View`
@@ -17,6 +18,7 @@ export const IconContainer = styled.View`
 `;
 
 export const Titulo = styled.Text`
+  font-family: ${Theme.fonts.bold};
   font-size: 26px;
   font-weight: 700;
   color: #1e293b;
@@ -25,6 +27,7 @@ export const Titulo = styled.Text`
 `;
 
 export const Descricao = styled.Text`
+  font-family: ${Theme.fonts.regular};
   font-size: 16px;
   line-height: 24px;
   color: #64748b;
@@ -34,6 +37,7 @@ export const Descricao = styled.Text`
 `;
 
 export const Ajuda = styled.Text`
+  font-family: ${Theme.fonts.regular};
   font-size: 13px;
   line-height: 20px;
   color: #94a3b8;
@@ -51,6 +55,7 @@ export const Rodape = styled.View`
 `;
 
 export const TextoRodape = styled.Text`
+  font-family: ${Theme.fonts.semiBold};
   font-size: 13px;
   color: #94a3b8;
   font-weight: 600;

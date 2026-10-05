@@ -1,3 +1,4 @@
+import { Theme } from "@Theme";
 import styled from "styled-components/native";
 
 export const MesaContainer = styled.View`
@@ -18,12 +19,14 @@ export const MesaIcon = styled.View`
 export const MesaInfo = styled.View``;
 
 export const NomeMesa = styled.Text`
+  font-family: ${Theme.fonts.bold};
   font-size: 16px;
   font-weight: 700;
   color: #111827;
 `;
 
 export const Data = styled.Text`
+  font-family: ${Theme.fonts.regular};
   font-size: 12px;
   color: #9ca3af;
   margin-top: 3px;
@@ -41,12 +44,14 @@ export const Pessoas = styled.View`
 `;
 
 export const TextoPessoas = styled.Text`
+  font-family: ${Theme.fonts.regular};
   font-size: 14px;
   color: #6b7280;
   margin-left: 5px;
 `;
 
 export const Valor = styled.Text`
+  font-family: ${Theme.fonts.extraBold};
   font-size: 18px;
   font-weight: 800;
   color: #111827;
@@ -73,6 +78,7 @@ export const StatusIcon = styled.View<{
 export const StatusTexto = styled.Text<{
   finalizada: boolean;
 }>`
+  font-family: ${Theme.fonts.bold};
   font-size: 12px;
   font-weight: 700;
   color: ${({ finalizada }) => (finalizada ? "#15803D" : "#B45309")};

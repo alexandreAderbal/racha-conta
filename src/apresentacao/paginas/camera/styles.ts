@@ -80,6 +80,7 @@ export const styles = StyleSheet.create({
   },
 
   textoFoto: {
+    fontFamily: Theme.fonts.semiBold,
     marginTop: 10,
     color: "#FFFFFF",
     fontSize: 14,
@@ -104,6 +105,7 @@ export const styles = StyleSheet.create({
   },
 
   titulo: {
+    fontFamily: Theme.fonts.bold,
     color: "#FFFFFF",
     fontSize: 23,
     fontWeight: "700",
@@ -131,6 +133,7 @@ export const styles = StyleSheet.create({
   },
 
   textoBotao: {
+    fontFamily: Theme.fonts.bold,
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "700",
@@ -142,12 +145,14 @@ export const styles = StyleSheet.create({
   },
 
   textoVoltar: {
+    fontFamily: Theme.fonts.semiBold,
     color: "#FFFFFF",
     fontSize: 15,
     fontWeight: "600",
   },
 
   carregando: {
+    fontFamily: Theme.fonts.regular,
     color: "#FFFFFF",
     fontSize: 16,
   },

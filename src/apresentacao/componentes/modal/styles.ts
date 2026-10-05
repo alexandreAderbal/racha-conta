@@ -1,3 +1,4 @@
+import { Theme } from "@Theme";
 import styled from "styled-components/native";
 
 export const Overlay = styled.View`
@@ -29,6 +30,7 @@ export const ModalHeader = styled.View`
 `;
 
 export const ModalTitulo = styled.Text`
+  font-family: ${Theme.fonts.bold};
   font-size: 21px;
   font-weight: 700;
   color: #111827;
