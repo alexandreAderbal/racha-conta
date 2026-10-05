@@ -1,16 +1,18 @@
 import { PessoaDivisaoDTO } from "@Infra-dto/pessoa-divisao-dto";
 import { NumberUtil } from "src/core/utils/number-util";
+import { useConfiguracao } from "./use-configuracao";
 import { ComandaDTO } from "@Infra-dto/comanda-dto";
+import { useComanda } from "./use-comanda";
 import { useSpinner } from "./use-spinner";
 import { Share } from "react-native";
 import { useState } from "react";
-import { DocumentoUtil } from "src/core/utils/documento-util";
-import { useConfiguracao } from "./use-configuracao";
 
 export function useDivisao() {
   const [divisao, setDivisao] = useState<PessoaDivisaoDTO[]>([]);
   const [totalComanda, setTotalComanda] = useState<number>(0);
   const { ativarSpinner, desativarSpinner } = useSpinner();
+  const { salvarComanda, comanda } = useComanda();
+
   const { buscarPix } = useConfiguracao();
 
   const dividirConta = (comanda: ComandaDTO) => {
@@ -18,7 +20,7 @@ export function useDivisao() {
       ativarSpinner("Dividindo a comanda");
       const resultado: PessoaDivisaoDTO[] = [];
       if (!comanda) return [];
-      var totalAux = comanda.total;
+      var totalAux = comanda.subtotal;
 
       comanda.itens.forEach((item) => {
         // Item ainda não foi atribuído a ninguém
@@ -66,7 +68,6 @@ export function useDivisao() {
         pessoa.taxaServicoGarcom =
           pessoa.subtotal * (comanda.taxaServicoGarcom / 100);
 
-        console.log("comanda.taxaServicoGarcom", comanda.taxaServicoGarcom);
         if (comanda.taxaServicoGarcom > 0) {
           pessoa.itens.push({
             id: -1,
@@ -109,7 +110,6 @@ export function useDivisao() {
 
     try {
       const chavePix = await buscarPix();
-      console.log("chavePix", chavePix);
       if (chavePix) {
         linhas.push("", "PAGAMENTO VIA PIX", `Chave do recebedor: ${chavePix}`);
       }
@@ -149,10 +149,16 @@ export function useDivisao() {
     return linhas.join("\n");
   };
 
+  const salvarComandaCalculada = () => {
+    if (comanda) salvarComanda({ ...comanda, total: totalComanda });
+  };
+
   return {
     compartilharResultado,
     dividirConta,
     divisao,
     totalComanda,
+    salvarComandaCalculada,
+    comanda,
   };
 }

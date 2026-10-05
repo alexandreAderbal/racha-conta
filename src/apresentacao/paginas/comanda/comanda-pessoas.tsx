@@ -9,92 +9,37 @@ import {
   TextoPessoa,
   TextoPessoas,
 } from "./styles";
-import Modal, { ModalRef } from "@Componentes/modal";
-import { PessoaDTO } from "@Infra-dto/pessoa-dto";
-import { Alert, ScrollView, View } from "react-native";
+import { useComandaPessoas } from "@Hooks/use-comanda-pessoas";
+import { NumberUtil } from "src/core/utils/number-util";
+import { ScrollView, View } from "react-native";
 import { ItemDTO } from "@Infra-dto/item-dto";
-import { useRef, useState } from "react";
-import { BTN } from "@Componentes/btns";
+import Alerta from "@Componentes/alerta";
 import { Icon } from "@Componentes/icon";
+import { BTN } from "@Componentes/btns";
+import Modal from "@Componentes/modal";
 import { Theme } from "@Theme";
-import { useComanda } from "@Hooks/use-comanda";
 
 interface IProps {
   item: ItemDTO;
 }
 
 export default function ComandaPessoas({ item }: IProps) {
-  const modalRef = useRef<ModalRef>(null);
   const {
+    abrirModal,
+    modalRef,
     pessoas,
-    adicionarPessoa,
-    marcarPessoa,
-    marcarPessoas,
-    removerPessoa,
-    atualizarQuantidadeConsumida,
-  } = useComanda();
-  const [nome, setNome] = useState("");
-  const [quantidadesDigitadas, setQuantidadesDigitadas] = useState<
-    Record<string, string>
-  >({});
-
-  function formatarQuantidade(quantidade: number) {
-    return quantidade.toLocaleString("pt-BR", {
-      maximumFractionDigits: 2,
-    });
-  }
-
-  function abrirModal() {
-    setQuantidadesDigitadas({});
-    modalRef.current?.titulo(`${item.quantidade} - ${item.descricao}`);
-    modalRef.current?.abrir();
-    marcarPessoas(item.pessoas);
-  }
-
-  function addPessoa() {
-    const nomeLimpo = nome.trim();
-    if (!nomeLimpo) return;
-    adicionarPessoa(PessoaDTO.criar(nomeLimpo), item.descricao);
-    setNome("");
-  }
-
-  function selecionarPessoa(pessoa: PessoaDTO) {
-    marcarPessoa(pessoa, item.descricao);
-  }
-
-  function confirmarRemocaoPessoa(pessoa: PessoaDTO) {
-    Alert.alert(
-      `Remover ${pessoa.nome}?`,
-      "A pessoa será removida da lista e de todos os itens da comanda.",
-      [
-        { text: "Cancelar", style: "cancel" },
-        {
-          text: "Remover",
-          style: "destructive",
-          onPress: () => {
-            removerPessoa(pessoa.nome);
-            setQuantidadesDigitadas((valores) => {
-              const atualizados = { ...valores };
-              delete atualizados[pessoa.nome];
-              return atualizados;
-            });
-          },
-        },
-      ],
-    );
-  }
-
-  function salvarQuantidade(pessoa: PessoaDTO, valorDigitado: string) {
-    const quantidade = Number(valorDigitado.replace(",", "."));
-    if (valorDigitado.trim() && Number.isFinite(quantidade)) {
-      atualizarQuantidadeConsumida(item.descricao, pessoa.nome, quantidade);
-    }
-    setQuantidadesDigitadas((valores) => {
-      const atualizados = { ...valores };
-      delete atualizados[pessoa.nome];
-      return atualizados;
-    });
-  }
+    selecionarPessoa,
+    confirmarRemocaoPessoa,
+    quantidadesDigitadas,
+    nome,
+    setNome,
+    addPessoa,
+    pessoaParaRemover,
+    cancelarRemocaoPessoa,
+    removerPessoaConfirmada,
+    setQuantidadesDigitadas,
+    salvarQuantidade,
+  } = useComandaPessoas(item);
 
   return (
     <View>
@@ -164,7 +109,7 @@ export default function ComandaPessoas({ item }: IProps) {
                     <QuantidadeInput
                       value={
                         quantidadesDigitadas[pessoa.nome] ??
-                        formatarQuantidade(
+                        NumberUtil.formatarQuantidade(
                           pessoaDoItem.quantidadeConsumida ?? 0,
                         )
                       }
@@ -199,6 +144,26 @@ export default function ComandaPessoas({ item }: IProps) {
 
         <BTN.Primary action={addPessoa} icon="plus" label="Adicionar" />
       </Modal>
+
+      <Alerta
+        visivel={pessoaParaRemover !== null}
+        tipo="erro"
+        titulo={
+          pessoaParaRemover
+            ? `Remover ${pessoaParaRemover.nome}?`
+            : "Remover pessoa?"
+        }
+        mensagem="Essa pessoa será removida da lista e de todos os itens da comanda."
+        fechar={cancelarRemocaoPessoa}
+        acaoSecundaria={{
+          texto: "Cancelar",
+          action: cancelarRemocaoPessoa,
+        }}
+        acaoPrincipal={{
+          texto: "Remover pessoa",
+          action: removerPessoaConfirmada,
+        }}
+      />
     </View>
   );
 }

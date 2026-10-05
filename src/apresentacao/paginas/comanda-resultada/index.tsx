@@ -1,5 +1,11 @@
 import ContainerPage from "@Componentes/containers/container-page";
+import { Card, CardTopo } from "@Componentes/containers/container-card";
+import { Descricao, TituloSucesso } from "@Componentes/texto";
+import { Conteudo } from "@Componentes/containers/containers";
 import { NumberUtil } from "src/core/utils/number-util";
+import { useDivisao } from "@Hooks/use-divisao";
+import { Icon } from "@Componentes/icon";
+import { BTN } from "@Componentes/btns";
 import { FlatList } from "react-native";
 import { useEffect } from "react";
 import {
@@ -19,24 +25,16 @@ import {
   ValorLinha,
   ValorTotal,
 } from "./styles";
-import { Card, CardTopo } from "@Componentes/containers/container-card";
-import { Descricao, TituloSucesso } from "@Componentes/texto";
-import { Conteudo } from "@Componentes/containers/containers";
-import { useDivisao } from "@Hooks/use-divisao";
-import { useComanda } from "@Hooks/use-comanda";
-import { Icon } from "@Componentes/icon";
-import { BTN } from "@Componentes/btns";
 
 export default function ComandaResultado() {
-  const { dividirConta, compartilharResultado, divisao, totalComanda } =
-    useDivisao();
-  const { salvarComanda, comanda } = useComanda();
-
-  function formatarQuantidade(quantidade: number) {
-    return quantidade.toLocaleString("pt-BR", {
-      maximumFractionDigits: 2,
-    });
-  }
+  const {
+    dividirConta,
+    compartilharResultado,
+    salvarComandaCalculada,
+    comanda,
+    divisao,
+    totalComanda,
+  } = useDivisao();
 
   useEffect(() => {
     if (comanda) {
@@ -83,7 +81,8 @@ export default function ComandaResultado() {
                   <NomeProduto>{produto.descricao}</NomeProduto>
                   <DetalhesProduto>
                     <QuantidadeProduto>
-                      Quantidade: {formatarQuantidade(produto.quantidade)}
+                      Quantidade:{" "}
+                      {NumberUtil.formatarQuantidade(produto.quantidade)}
                     </QuantidadeProduto>
                     <ValorLinha>
                       {NumberUtil.formatarValor(produto.valor)}
@@ -100,7 +99,7 @@ export default function ComandaResultado() {
           <BTN.Sucesso
             icon="check"
             label="Salvar comanda"
-            action={salvarComanda}
+            action={salvarComandaCalculada}
           />
         ) : (
           <BTN.Sucesso

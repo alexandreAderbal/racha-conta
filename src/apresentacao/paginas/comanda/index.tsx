@@ -26,6 +26,10 @@ import Calcular from "./calcular";
 
 export function Comanda() {
   const { comanda, atualizarTaxaGarcom } = useComanda();
+  const itensSemPessoa =
+    comanda?.itens
+      .filter((item) => !item.pessoas?.length)
+      .map((item) => item.descricao) ?? [];
 
   const valorTotal = comanda?.itens.reduce(
     (total, item) => total + item.quantidade * item.valorUnitario,
@@ -95,7 +99,10 @@ export function Comanda() {
         }}
       />
 
-      <Calcular action={atualizarTaxaGarcom} />
+      <Calcular
+        action={atualizarTaxaGarcom}
+        itensSemPessoa={itensSemPessoa}
+      />
     </ContainerPage>
   );
 }

@@ -25,7 +25,6 @@ export function useComanda() {
   };
 
   const atualizarTaxaGarcom = (value: string) => {
-    console.log("value", value);
     if (comanda)
       adicionarComanda({ ...comanda, taxaServicoGarcom: Number(value) });
   };
@@ -70,14 +69,14 @@ export function useComanda() {
     dispatch(removerPessoas());
   };
 
-  const salvarComanda = async () => {
+  const salvarComanda = async (dto: ComandaDTO) => {
     try {
       ativarSpinner("Salvando a divisão");
-      if (!comanda) return;
-      const idComanda = await SERVICE.comanda.salvar(comanda);
+      if (!dto) return;
+      const idComanda = await SERVICE.comanda.salvar(dto);
       if (!idComanda) return;
       adicionarComanda({
-        ...comanda,
+        ...dto,
         id: idComanda,
       });
     } finally {

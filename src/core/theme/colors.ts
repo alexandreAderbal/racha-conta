@@ -13,6 +13,7 @@ export const colors = {
 
   success: "#16A34A",
   danger: "#DC2626",
+  warning: "#B45309",
 
   white: "#FFFFFF",
   black: "#000000",

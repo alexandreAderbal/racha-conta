@@ -10,6 +10,7 @@ export class ComandaMapper {
     modelo.mesa = dto.mesa;
     modelo.status = "FINALIZADA";
     modelo.total = dto.total;
+    modelo.subtotal = dto.subtotal;
     modelo.id = dto.id || 0;
     return modelo;
   }
@@ -25,6 +26,7 @@ export class ComandaMapper {
     dto.mesa = modelo.mesa;
     dto.status = modelo.status;
     dto.total = modelo.total;
+    dto.subtotal = modelo.subtotal;
     dto.id = modelo.id;
     dto.taxaServicoGarcom = 10;
     return dto;

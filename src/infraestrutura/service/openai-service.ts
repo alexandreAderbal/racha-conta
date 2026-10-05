@@ -45,7 +45,6 @@ export class OpenAIService {
     if (!texto) {
       throw new Error("A OpenAI não retornou nenhum resultado.");
     }
-    console.log("texto", texto);
 
     try {
       const resultado = JSON.parse(texto) as ComandaDTO;

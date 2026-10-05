@@ -1,6 +1,6 @@
 import * as SQLite from "expo-sqlite";
 
-export const dbPromise = SQLite.openDatabaseAsync("racha_conta_05.db");
+export const dbPromise = SQLite.openDatabaseAsync("racha_conta_06.db");
 
 export async function inicializarBanco() {
   console.log("Iniciando criação do banco e tabelas.");
@@ -13,6 +13,7 @@ export async function inicializarBanco() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       mesa TEXT NOT NULL,
       total REAL NOT NULL DEFAULT 0,
+      subtotal REAL NOT NULL DEFAULT 0,
       status TEXT NOT NULL DEFAULT 'EM_ANDAMENTO',
       criado_em TEXT NOT NULL,
       finalizada_em TEXT

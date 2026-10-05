@@ -5,4 +5,10 @@ export class NumberUtil {
       currency: "BRL",
     });
   }
+
+  public static formatarQuantidade(quantidade: number, size?: number) {
+    return quantidade.toLocaleString("pt-BR", {
+      maximumFractionDigits: size ? size : 2,
+    });
+  }
 }

@@ -6,6 +6,7 @@ export class ComandaModelo extends ModeloBase {
   mesa!: string;
   total!: number;
   status!: StatusComanda;
+  subtotal!: number;
   finalizadaEm!: string | null;
   criadoEm!: string | null;
 }

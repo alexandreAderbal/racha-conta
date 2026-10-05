@@ -59,7 +59,6 @@ export class ComandaService {
 
   async buscarTodas(): Promise<ComandaDTO[]> {
     try {
-      var teste = await this.repositorio.listar();
       return await this.repositorio.buscarTodos();
     } catch (error) {
       console.error("Erro ao buscar as comandas:", error);

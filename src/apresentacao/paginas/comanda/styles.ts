@@ -196,3 +196,27 @@ export const Actions = styled.View`
   flex-direction: row;
   gap: 12px;
 `;
+
+export const PendenciasLista = styled.View`
+  width: 100%;
+  padding: 14px;
+  border-width: 1px;
+  border-color: #e2e8f0;
+  border-radius: 12px;
+  background-color: #f8fafc;
+`;
+
+export const PendenciasTitulo = styled.Text`
+  margin-bottom: 8px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+`;
+
+export const PendenciaItem = styled.Text`
+  padding: 4px 0;
+  color: #334155;
+  font-size: 14px;
+  line-height: 20px;
+`;
