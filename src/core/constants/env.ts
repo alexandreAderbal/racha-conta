@@ -1,0 +1,4 @@
+export const ENV = {
+  OPENAI_API_KEY:
+    "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",
+};

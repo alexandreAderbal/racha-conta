@@ -10,7 +10,6 @@ export class ConfiguracaoService {
 
   async salvar(chave: string, valor: string): Promise<void> {
     const exite = await this.repositorio.buscarPorCampos({ chave });
-    console.log(exite);
     if (exite?.id) {
       this.repositorio.atualizar(exite.id, { ...exite, valor: valor });
     } else {

@@ -39,30 +39,28 @@ export default function Calcular({ action, itensSemPessoa }: IProps) {
     navigation.navigate("ComandaResultado");
   };
 
-  return (
-    <ContainerFooter>
-      <BTN.Sucesso
-        action={abrirModalCalculo}
-        icon="calculator-variant"
-        label="Dividir comanda"
-      />
+  const onChangeText = (valor: string) => {
+    setPerncentual(valor);
+    action(valor);
+  };
 
+  return (
+    <>
       <Modal ref={modalRef}>
         <Label>Deseja adicionar a taxa de serviço do garçom?</Label>
 
         <Input
           value={percentual}
-          onChangeText={setPerncentual}
+          onChangeText={onChangeText}
           placeholder="Percentual"
           placeholderTextColor="#9CA3AF"
           keyboardType="decimal-pad"
           inputMode="numeric"
           maxLength={2}
           returnKeyType="done"
-          onBlur={() => action(percentual)}
         />
 
-        <BTN.Sucesso
+        <BTN.Primary
           action={abrirComandaResultado}
           icon="calculator-variant-outline"
           label="Calcular"
@@ -99,6 +97,13 @@ export default function Calcular({ action, itensSemPessoa }: IProps) {
           ) : null}
         </PendenciasLista>
       </Alerta>
-    </ContainerFooter>
+      <ContainerFooter>
+        <BTN.Sucesso
+          action={abrirModalCalculo}
+          icon="calculator-variant"
+          label="Dividir comanda"
+        />
+      </ContainerFooter>
+    </>
   );
 }

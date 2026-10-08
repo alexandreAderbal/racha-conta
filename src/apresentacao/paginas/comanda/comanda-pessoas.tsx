@@ -29,6 +29,8 @@ export default function ComandaPessoas({ item }: IProps) {
     modalRef,
     pessoas,
     selecionarPessoa,
+    todasPessoasSelecionadas,
+    alternarTodasPessoas,
     confirmarRemocaoPessoa,
     quantidadesDigitadas,
     nome,
@@ -67,13 +69,58 @@ export default function ComandaPessoas({ item }: IProps) {
         }
       />
 
-      <Modal ref={modalRef}>
-        {pessoas.length > 0 && <Label>Pessoas da mesa</Label>}
+      <Alerta
+        visivel={pessoaParaRemover !== null}
+        tipo="erro"
+        titulo={
+          pessoaParaRemover
+            ? `Remover ${pessoaParaRemover.nome}?`
+            : "Remover pessoa?"
+        }
+        mensagem="Essa pessoa será removida da lista e de todos os itens da comanda."
+        fechar={cancelarRemocaoPessoa}
+        acaoSecundaria={{
+          texto: "Cancelar",
+          action: cancelarRemocaoPessoa,
+        }}
+        acaoPrincipal={{
+          texto: "Remover pessoa",
+          action: removerPessoaConfirmada,
+        }}
+      />
 
+      <Modal ref={modalRef}>
         <ScrollView
-          style={{ maxHeight: 300 }}
+          style={{ maxHeight: 260 }}
           keyboardShouldPersistTaps="always"
         >
+          {pessoas.length > 0 && (
+            <>
+              <Label>Pessoas da mesa</Label>
+              <BotaoPessoa
+                selecionada={todasPessoasSelecionadas}
+                onPress={alternarTodasPessoas}
+                accessibilityRole="checkbox"
+                accessibilityState={{ checked: todasPessoasSelecionadas }}
+              >
+                <Icon
+                  nome={
+                    todasPessoasSelecionadas
+                      ? "checkbox-marked"
+                      : "checkbox-blank-outline"
+                  }
+                  cor={
+                    todasPessoasSelecionadas
+                      ? Theme.colors.primary
+                      : Theme.colors.textSecondary
+                  }
+                  size={24}
+                />
+                <TextoPessoa>Selecionar todas</TextoPessoa>
+              </BotaoPessoa>
+            </>
+          )}
+
           {pessoas.map((pessoa) => {
             const pessoaDoItem = item.pessoas.find(
               (pessoaItem) => pessoaItem.nome === pessoa.nome,
@@ -139,31 +186,10 @@ export default function ComandaPessoas({ item }: IProps) {
           onChangeText={setNome}
           placeholder="Digite o nome"
           placeholderTextColor="#9CA3AF"
-          returnKeyType="done"
         />
 
         <BTN.Primary action={addPessoa} icon="plus" label="Adicionar" />
       </Modal>
-
-      <Alerta
-        visivel={pessoaParaRemover !== null}
-        tipo="erro"
-        titulo={
-          pessoaParaRemover
-            ? `Remover ${pessoaParaRemover.nome}?`
-            : "Remover pessoa?"
-        }
-        mensagem="Essa pessoa será removida da lista e de todos os itens da comanda."
-        fechar={cancelarRemocaoPessoa}
-        acaoSecundaria={{
-          texto: "Cancelar",
-          action: cancelarRemocaoPessoa,
-        }}
-        acaoPrincipal={{
-          texto: "Remover pessoa",
-          action: removerPessoaConfirmada,
-        }}
-      />
     </View>
   );
 }

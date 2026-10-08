@@ -7,7 +7,6 @@ import { styles } from "./styles";
 import { Theme } from "@Theme";
 import { useComanda } from "@Hooks/use-comanda";
 import { useSpinner } from "@Hooks/use-spinner";
-import { SERVICE } from "@Infra-service";
 
 export function Camera({ navigation }: any) {
   const cameraRef = useRef<CameraView>(null);
@@ -15,7 +14,7 @@ export function Camera({ navigation }: any) {
   const [flashLigado, setFlashLigado] = useState(false);
   const [facing, setFacing] = useState<CameraType>("back");
   const [tirandoFoto, setTirandoFoto] = useState(false);
-  const { adicionarComanda, limparPessoas } = useComanda();
+  const { processarOpenAi, limparPessoas } = useComanda();
   const { ativarSpinner, desativarSpinner } = useSpinner();
 
   if (!permission) {
@@ -79,7 +78,9 @@ export function Camera({ navigation }: any) {
 
       if (uri) {
         const base64 = await UTILS.file.base64(uri);
-        adicionarComanda(await SERVICE.openAIService.analisar([base64]));
+        const processado = await processarOpenAi([base64]);
+        if (!processado) return;
+
         limparPessoas();
         navigation.navigate("Comanda");
       }

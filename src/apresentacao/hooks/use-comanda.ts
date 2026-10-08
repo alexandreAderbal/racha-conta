@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@Store/hooks";
+import { Alert } from "react-native";
 import { ComandaDTO } from "@Infra-dto/comanda-dto";
 import { PessoaDTO } from "@Infra-dto/pessoa-dto";
 import { useSpinner } from "./use-spinner";
@@ -20,8 +21,23 @@ export function useComanda() {
   const { ativarSpinner, desativarSpinner } = useSpinner();
   const dispatch = useAppDispatch();
 
-  const adicionarComanda = (comanda: ComandaDTO) => {
-    dispatch(atualizarComanda(comanda));
+  const processarOpenAi = async (base64: string[]): Promise<boolean> => {
+    const dto = await SERVICE.openAIService.analisar(base64);
+
+    if (!dto.itens?.length) {
+      Alert.alert(
+        "Nenhum item encontrado",
+        "Não identificamos itens nessa imagem. Tente novamente com uma foto mais nítida da comanda.",
+      );
+      return false;
+    }
+
+    adicionarComanda(dto);
+    return true;
+  };
+
+  const adicionarComanda = async (dto: ComandaDTO) => {
+    dispatch(atualizarComanda(dto));
   };
 
   const atualizarTaxaGarcom = (value: string) => {
@@ -97,5 +113,6 @@ export function useComanda() {
     comanda,
     pessoas,
     salvarComanda,
+    processarOpenAi,
   };
 }

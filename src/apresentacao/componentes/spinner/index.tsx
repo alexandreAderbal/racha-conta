@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Easing } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Theme } from "@Theme";
 
 import {
@@ -13,20 +12,26 @@ import {
   Pontos,
 } from "./styles";
 import { useSpinner } from "@Hooks/use-spinner";
+import { Icon } from "@Componentes/icon";
 
 export function Spinner() {
   const rotacao = useRef(new Animated.Value(0)).current;
   const escala = useRef(new Animated.Value(1)).current;
-  const [pontos, setPontos] = useState("");
   const { spinner } = useSpinner();
 
   useEffect(() => {
+    if (!spinner.ativo) return;
+
+    rotacao.setValue(0);
+    escala.setValue(1);
+
     const rotation = Animated.loop(
       Animated.timing(rotacao, {
         toValue: 1,
         duration: 1800,
         easing: Easing.linear,
         useNativeDriver: true,
+        isInteraction: false,
       }),
     );
 
@@ -37,12 +42,14 @@ export function Spinner() {
           duration: 1100,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
+          isInteraction: false,
         }),
         Animated.timing(escala, {
           toValue: 1,
           duration: 1100,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
+          isInteraction: false,
         }),
       ]),
     );
@@ -54,25 +61,18 @@ export function Spinner() {
       rotation.stop();
       pulse.stop();
     };
-  }, []);
+  }, [spinner.ativo, rotacao, escala]);
 
-  useEffect(() => {
-    const intervalo = setInterval(() => {
-      setPontos((valor) => {
-        if (valor === "...") return "";
-        return valor + ".";
-      });
-    }, 450);
+  const rotate = useMemo(
+    () =>
+      rotacao.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0deg", "360deg"],
+      }),
+    [rotacao],
+  );
 
-    return () => clearInterval(intervalo);
-  }, []);
-
-  const rotate = rotacao.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
-  });
-
-  if (!spinner.ativo) return;
+  if (!spinner.ativo) return null;
 
   return (
     <Container>
@@ -92,10 +92,10 @@ export function Spinner() {
           }}
         >
           <IconArea>
-            <MaterialCommunityIcons
-              name="account-multiple-outline"
+            <Icon
+              nome="account-multiple-outline"
               size={42}
-              color={Theme.colors.primary}
+              cor={Theme.colors.primary}
             />
           </IconArea>
         </Animated.View>
@@ -103,10 +103,24 @@ export function Spinner() {
 
       <Mensagem>
         Aguarde
-        <Pontos>{pontos}</Pontos>
+        <PontosAnimados />
       </Mensagem>
 
       <SubMensagem> {spinner.msg}</SubMensagem>
     </Container>
   );
+}
+
+function PontosAnimados() {
+  const [pontos, setPontos] = useState("");
+
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      setPontos((valor) => (valor === "..." ? "" : `${valor}.`));
+    }, 450);
+
+    return () => clearInterval(intervalo);
+  }, []);
+
+  return <Pontos>{pontos}</Pontos>;
 }

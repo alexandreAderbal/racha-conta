@@ -52,7 +52,10 @@ const Modal = forwardRef<ModalRef, ModalProps>(({ children }, ref) => {
       animationType="slide"
       onRequestClose={fechar}
     >
-      <KeyboardAvoidingView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <Overlay>
           <ModalBackdrop
             onPress={fechar}

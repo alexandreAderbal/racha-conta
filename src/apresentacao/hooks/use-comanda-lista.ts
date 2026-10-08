@@ -8,12 +8,14 @@ import { useState } from "react";
 
 export function useComandaLista() {
   const [listaComanda, setListaComanda] = useState<ComandaDTO[]>([]);
+  const [carregouLista, setCarregouLista] = useState(false);
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const dispatch = useAppDispatch();
 
   const buscarComandas = async () => {
     const resultado = await SERVICE.comanda.buscarTodas();
     setListaComanda(resultado);
+    setCarregouLista(true);
   };
 
   const buscarComanda = async (idComanda?: number | null) => {
@@ -27,5 +29,5 @@ export function useComandaLista() {
     }
   };
 
-  return { listaComanda, buscarComandas, buscarComanda };
+  return { listaComanda, carregouLista, buscarComandas, buscarComanda };
 }

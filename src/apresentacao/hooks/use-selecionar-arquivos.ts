@@ -3,11 +3,10 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { useComanda } from "./use-comanda";
-import { SERVICE } from "@Infra-service";
 
 export function useSelecionarArquivos() {
   const { ativarSpinner, desativarSpinner } = useSpinner();
-  const { adicionarComanda, limparPessoas } = useComanda();
+  const { processarOpenAi, limparPessoas } = useComanda();
   const navigation = useNavigation<any>();
 
   async function selecionarArquivos() {
@@ -47,9 +46,10 @@ export function useSelecionarArquivos() {
       ativarSpinner();
 
       const imagensBase64 = await arquivosParaBase64(arquivos);
-      limparPessoas();
-      adicionarComanda(await SERVICE.openAIService.analisar(imagensBase64));
+      const processado = await processarOpenAi(imagensBase64);
+      if (!processado) return;
 
+      limparPessoas();
       navigation.navigate("Comanda");
     } catch (error) {
       console.error("Erro ao selecionar arquivos:", error);

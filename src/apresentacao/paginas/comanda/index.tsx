@@ -1,6 +1,5 @@
-import ContainerPage from "@Componentes/containers/container-page";
 import { ItemDTO } from "@Infra-dto/item-dto";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import { Theme } from "@Theme";
 import {
   Descricao,
@@ -65,7 +64,7 @@ export function Comanda() {
   }
 
   return (
-    <ContainerPage>
+    <View style={{ flex: 1 }}>
       <MesaInfo>
         <MesaTitulo>Mesa: {comanda?.mesa}</MesaTitulo>
       </MesaInfo>
@@ -89,20 +88,18 @@ export function Comanda() {
       <TituloSecao>Produtos consumidos</TituloSecao>
 
       <FlatList
+        style={{ flex: 1 }}
         data={comanda?.itens}
         keyExtractor={(item, index) => `${item.id ?? item.descricao}_${index}`}
         renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
         contentContainerStyle={{
           paddingHorizontal: 16,
           paddingBottom: 120,
         }}
       />
 
-      <Calcular
-        action={atualizarTaxaGarcom}
-        itensSemPessoa={itensSemPessoa}
-      />
-    </ContainerPage>
+      <Calcular action={atualizarTaxaGarcom} itensSemPessoa={itensSemPessoa} />
+    </View>
   );
 }

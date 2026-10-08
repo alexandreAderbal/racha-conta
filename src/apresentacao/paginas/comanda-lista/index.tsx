@@ -25,9 +25,11 @@ import {
 import { Icon } from "@Componentes/icon";
 import { DataUtil } from "src/core/utils/data-util";
 import { useComandaLista } from "@Hooks/use-comanda-lista";
+import { ListaVazia } from "@Componentes/lista-vazia";
 
 export default function ComandaLista() {
-  const { buscarComandas, listaComanda, buscarComanda } = useComandaLista();
+  const { buscarComandas, listaComanda, carregouLista, buscarComanda } =
+    useComandaLista();
 
   useEffect(() => {
     buscarComandas();
@@ -51,9 +53,16 @@ export default function ComandaLista() {
           keyExtractor={(item, index) => `${item.mesa}_${index}`}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
+            flexGrow: 1,
             paddingTop: 20,
             paddingBottom: 30,
           }}
+          ListEmptyComponent={
+            <ListaVazia
+              titulo="Nenhuma comanda salva"
+              subTitulo=" As comandas que você salvar aparecerão aqui."
+            />
+          }
           renderItem={({ item }) => (
             <Card activeOpacity={0.85} onPress={() => buscarComanda(item.id)}>
               <CardTopo>

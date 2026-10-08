@@ -40,6 +40,25 @@ export function useComandaPessoas(item: ItemDTO) {
     marcarPessoa(pessoa, item.descricao);
   }
 
+  const todasPessoasSelecionadas =
+    pessoas.length > 0 &&
+    pessoas.every((pessoa) =>
+      item.pessoas.some((pessoaDoItem) => pessoaDoItem.nome === pessoa.nome),
+  );
+
+  function alternarTodasPessoas() {
+    const nomesSelecionados = new Set(
+      item.pessoas.map((pessoa) => pessoa.nome),
+    );
+    const pessoasParaAlternar = todasPessoasSelecionadas
+      ? item.pessoas
+      : pessoas.filter((pessoa) => !nomesSelecionados.has(pessoa.nome));
+
+    pessoasParaAlternar.forEach((pessoa) =>
+      marcarPessoa(pessoa, item.descricao),
+    );
+  }
+
   function confirmarRemocaoPessoa(pessoa: PessoaDTO) {
     setPessoaParaRemover(pessoa);
   }
@@ -75,6 +94,8 @@ export function useComandaPessoas(item: ItemDTO) {
     abrirModal,
     addPessoa,
     selecionarPessoa,
+    todasPessoasSelecionadas,
+    alternarTodasPessoas,
     confirmarRemocaoPessoa,
     removerPessoaConfirmada,
     salvarQuantidade,

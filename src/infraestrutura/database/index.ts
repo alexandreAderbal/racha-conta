@@ -1,6 +1,6 @@
 import * as SQLite from "expo-sqlite";
 
-export const dbPromise = SQLite.openDatabaseAsync("racha_conta_06.db");
+export const dbPromise = SQLite.openDatabaseAsync("racha_conta_07.db");
 
 export async function inicializarBanco() {
   console.log("Iniciando criação do banco e tabelas.");
