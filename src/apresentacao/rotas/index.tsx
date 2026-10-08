@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import ComandaResultado from "@Paginas/comanda-resultada";
 import { SemInternet } from "@Paginas/sem-internet";
 import { useInternet } from "@Hooks/use-internet";
@@ -8,8 +8,16 @@ import { Comanda } from "@Paginas/comanda";
 import { Camera } from "@Paginas/camera";
 import Header from "@Componentes/header";
 import { Home } from "@Paginas/home";
+import { Theme } from "@Theme";
 
 const Stack = createNativeStackNavigator();
+const temaNavegacao = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: Theme.colors.background,
+  },
+};
 
 export function Rotas() {
   const { conectado, verificarConexao } = useInternet();
@@ -18,8 +26,12 @@ export function Rotas() {
     return <SemInternet verificarConexao={verificarConexao} />;
   }
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
+    <NavigationContainer theme={temaNavegacao}>
+      <Stack.Navigator
+        screenOptions={{
+          contentStyle: { backgroundColor: Theme.colors.background },
+        }}
+      >
         <Stack.Screen
           name="Home"
           component={Home}

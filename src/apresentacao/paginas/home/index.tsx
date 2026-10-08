@@ -57,26 +57,30 @@ export function Home({ navigation }: Props) {
         <Features>
           <Feature>
             <FeatureIcon>
-              <Icon nome="table-plus" size={28} cor="#00D4B4" />
+              <Icon nome="file-upload-outline" size={28} cor="#00D4B4" />
             </FeatureIcon>
 
-            <FeatureText>Crie a mesa</FeatureText>
+            <FeatureText>Envie foto ou arquivo</FeatureText>
           </Feature>
 
           <Feature>
             <FeatureIcon>
-              <Icon nome="food-fork-drink" size={28} cor="#00D4B4" />
+              <Icon
+                nome="text-box-search-outline"
+                size={28}
+                cor="#00D4B4"
+              />
             </FeatureIcon>
 
-            <FeatureText>Adicione os itens</FeatureText>
+            <FeatureText>Extração automática dos itens</FeatureText>
           </Feature>
 
           <Feature>
             <FeatureIcon>
-              <Icon nome="check-circle-outline" size={28} cor="#00D4B4" />
+              <Icon nome="account-group-outline" size={28} cor="#00D4B4" />
             </FeatureIcon>
 
-            <FeatureText>Separe os valores</FeatureText>
+            <FeatureText>Associe pessoas aos itens</FeatureText>
           </Feature>
         </Features>
 
