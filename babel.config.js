@@ -14,6 +14,7 @@ module.exports = function (api) {
             '@Paginas': './src/apresentacao/paginas',
             '@Hooks': './src/apresentacao/hooks',
             '@Componentes': './src/apresentacao/componentes',
+            '@Providers': './src/apresentacao/providers',
             '@Constant': './src/core/constants',
             '@Mocks': './src/core/mocks',
             '@Infra-data-base': './src/infraestrutura/database',

@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@Store/hooks";
-import { Alert } from "react-native";
+import { useAlerta } from "@Providers/alerta";
 import { ComandaDTO } from "@Infra-dto/comanda-dto";
 import { PessoaDTO } from "@Infra-dto/pessoa-dto";
 import { useSpinner } from "./use-spinner";
@@ -18,6 +18,7 @@ import {
 
 export function useComanda() {
   const { comanda, pessoas } = useAppSelector((state) => state.comandaReducer);
+  const { mostrarAlerta } = useAlerta();
   const { ativarSpinner, desativarSpinner } = useSpinner();
   const dispatch = useAppDispatch();
 
@@ -25,10 +26,12 @@ export function useComanda() {
     const dto = await SERVICE.openAIService.analisar(base64);
 
     if (!dto.itens?.length) {
-      Alert.alert(
-        "Nenhum item encontrado",
-        "Não identificamos itens nessa imagem. Tente novamente com uma foto mais nítida da comanda.",
-      );
+      mostrarAlerta({
+        tipo: "aviso",
+        titulo: "Nenhum item encontrado",
+        mensagem:
+          "Não identificamos itens nessa imagem. Tente novamente com uma foto mais nítida da comanda.",
+      });
       return false;
     }
 

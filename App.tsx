@@ -1,6 +1,7 @@
 import { Rotas } from "@Rotas";
 import { Theme } from "@Theme";
 import { Store } from "@Store";
+import { AlertaProvider } from "@Providers/alerta";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { useEffect } from "react";
@@ -43,8 +44,10 @@ export default function App() {
   return (
     <Provider store={Store}>
       <ThemeProvider theme={Theme}>
-        <Rotas />
-        <Spinner />
+        <AlertaProvider>
+          <Rotas />
+          <Spinner />
+        </AlertaProvider>
       </ThemeProvider>
     </Provider>
   );

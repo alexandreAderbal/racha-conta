@@ -12,6 +12,7 @@
       "@Theme": ["src/core/theme/index"],
       "@Paginas/*": ["src/apresentacao/paginas/*"],
       "@Componentes/*": ["src/apresentacao/componentes/*"],
+      "@Providers/*": ["src/apresentacao/providers/*"],
       "@Constant": ["src/core/constants/index"],
       "@Mocks/*": ["src/core/mocks/*"],
       "@Infra-data-base/*": ["src/infraestrutura/database/*"],
