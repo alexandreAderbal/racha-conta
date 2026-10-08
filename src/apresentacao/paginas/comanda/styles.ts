@@ -113,12 +113,14 @@ export const LinhaPessoas = styled.View`
   align-items: center;
 `;
 
-export const TextoPessoas = styled.Text`
-  font-family: ${Theme.fonts.regular};
+export const TextoPessoas = styled.Text<{ $destacada: boolean }>`
+  font-family: ${({ $destacada }) =>
+    $destacada ? Theme.fonts.semiBold : Theme.fonts.regular};
   flex: 1;
   margin-left: 8px;
   font-size: 13px;
-  color: ${Theme.colors.textSecondary};
+  color: ${({ $destacada }) =>
+    $destacada ? Theme.colors.primary : Theme.colors.textSecondary};
 `;
 
 export const Overlay = styled.View`

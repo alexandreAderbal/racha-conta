@@ -29,6 +29,7 @@ import { Icon } from "@Componentes/icon";
 import Calcular from "./calcular";
 import Modal, { ModalRef } from "@Componentes/modal";
 import { BTN } from "@Componentes/btns";
+import ContainerPage from "@Componentes/containers/container-page";
 
 export function Comanda() {
   const { comanda, atualizarTaxaGarcom, atualizarNomeMesa } = useComanda();
@@ -92,7 +93,7 @@ export function Comanda() {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <ContainerPage>
       <MesaInfo>
         <MesaTitulo numberOfLines={1}>Mesa: {comanda?.mesa}</MesaTitulo>
         <BotaoEditarMesa
@@ -159,6 +160,6 @@ export function Comanda() {
           label="Salvar nome"
         />
       </Modal>
-    </View>
+    </ContainerPage>
   );
 }

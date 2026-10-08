@@ -42,22 +42,23 @@ export default function ComandaPessoas({ item }: IProps) {
     setQuantidadesDigitadas,
     salvarQuantidade,
   } = useComandaPessoas(item);
+  const possuiPessoas = item.pessoas.length > 0;
 
   return (
     <View>
       <LinhaPessoas>
         <Icon
           nome="account-group-outline"
-          cor={Theme.colors.textSecondary}
+          cor={possuiPessoas ? Theme.colors.primary : Theme.colors.textSecondary}
           size={20}
         />
 
-        <TextoPessoas>
-          {item.pessoas.length === 0
-            ? "Nenhuma pessoa atribuída"
-            : `${item.pessoas.length} ${
-                item.pessoas.length === 1 ? "pessoa" : "pessoas"
-              } consumiram`}
+        <TextoPessoas $destacada={possuiPessoas}>
+          {possuiPessoas
+            ? `${item.pessoas.length} ${
+                item.pessoas.length === 1 ? "pessoa atribuída" : "pessoas atribuídas"
+              }`
+            : "Nenhuma pessoa atribuída"}
         </TextoPessoas>
       </LinhaPessoas>
 
