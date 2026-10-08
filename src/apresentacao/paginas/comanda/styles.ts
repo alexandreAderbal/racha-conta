@@ -3,13 +3,26 @@ import styled from "styled-components/native";
 
 export const MesaInfo = styled.View`
   padding: 4px 20px 18px;
+  flex-direction: row;
+  align-items: center;
 `;
 
 export const MesaTitulo = styled.Text`
+  flex: 1;
   font-family: ${Theme.fonts.extraBold};
   font-size: 24px;
   font-weight: 800;
   color: ${Theme.colors.text};
+`;
+
+export const BotaoEditarMesa = styled.Pressable`
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  background-color: #e6f5f2;
 `;
 
 export const Resumo = styled.View`
@@ -209,6 +222,13 @@ export const TextoPessoa = styled.Text`
 export const Actions = styled.View`
   flex-direction: row;
   gap: 12px;
+`;
+
+export const ErroNomeMesa = styled.Text`
+  font-family: ${Theme.fonts.regular};
+  margin: -2px 0 10px;
+  color: ${Theme.colors.danger};
+  font-size: 13px;
 `;
 
 export const PendenciasLista = styled.View`

@@ -48,6 +48,10 @@ export function useComanda() {
       adicionarComanda({ ...comanda, taxaServicoGarcom: Number(value) });
   };
 
+  const atualizarNomeMesa = (nome: string) => {
+    if (comanda) adicionarComanda({ ...comanda, mesa: nome });
+  };
+
   const adicionarPessoa = (pessoa: PessoaDTO, descricao: string) => {
     dispatch(atualizarPessoas(pessoa));
     dispatch(atualizaComandaItemPessoas({ pessoa, descricao }));
@@ -112,6 +116,7 @@ export function useComanda() {
     atualizarQuantidadeConsumida,
     limparPessoasMarcadas,
     atualizarTaxaGarcom,
+    atualizarNomeMesa,
     limparPessoas,
     comanda,
     pessoas,
