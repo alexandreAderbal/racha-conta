@@ -6,6 +6,7 @@ import { useComanda } from "./use-comanda";
 import { useSpinner } from "./use-spinner";
 import { Share } from "react-native";
 import { useState } from "react";
+import { SERVICE } from "@Infra-service";
 
 export function useDivisao() {
   const [divisao, setDivisao] = useState<PessoaDivisaoDTO[]>([]);
@@ -87,7 +88,11 @@ export function useDivisao() {
     }
   };
 
-  const compartilharResultado = async (comanda: ComandaDTO) => {
+  const compartilharResultado = async (
+    comanda: ComandaDTO,
+    propaganda: boolean,
+  ) => {
+    if (propaganda) await SERVICE.adMobService.exibirInterstitial();
     if (!comanda || divisao.length === 0) {
       return;
     }

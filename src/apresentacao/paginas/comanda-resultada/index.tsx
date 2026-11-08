@@ -4,6 +4,7 @@ import { Descricao, TituloSucesso } from "@Componentes/texto";
 import { Conteudo } from "@Componentes/containers/containers";
 import { NumberUtil } from "src/core/utils/number-util";
 import { useDivisao } from "@Hooks/use-divisao";
+import { SERVICE } from "@Infra-service";
 import { Icon } from "@Componentes/icon";
 import { BTN } from "@Componentes/btns";
 import { FlatList } from "react-native";
@@ -26,7 +27,12 @@ import {
   ValorTotal,
 } from "./styles";
 
-export default function ComandaResultado() {
+interface Props {
+  navigation: any;
+  route: any;
+}
+
+export default function ComandaResultado({ navigation, route }: Props) {
   const {
     dividirConta,
     compartilharResultado,
@@ -41,6 +47,23 @@ export default function ComandaResultado() {
       dividirConta(comanda);
     }
   }, [comanda]);
+
+  useEffect(() => {
+    if (!route.params?.mostrarInterstitial) return;
+
+    let removerListener = () => {};
+    removerListener = navigation.addListener(
+      "transitionEnd",
+      (evento: { data?: { closing?: boolean } }) => {
+        if (evento.data?.closing) return;
+
+        removerListener();
+        void SERVICE.adMobService.exibirInterstitial();
+      },
+    );
+
+    return removerListener;
+  }, [navigation, route.params?.mostrarInterstitial]);
 
   return (
     <ContainerPage>

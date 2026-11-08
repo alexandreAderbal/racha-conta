@@ -36,7 +36,7 @@ export default function Calcular({ action, itensSemPessoa }: IProps) {
 
   const abrirComandaResultado = () => {
     modalRef.current?.fechar();
-    navigation.navigate("ComandaResultado");
+    navigation.navigate("ComandaResultado", { mostrarInterstitial: true });
   };
 
   const onChangeText = (valor: string) => {

@@ -2,7 +2,7 @@ import { Theme } from "@Theme";
 import styled from "styled-components/native";
 
 export const Container = styled.View`
-  height: 70px;
+  height: 80px;
   width: 100%;
   background-color: ${Theme.colors.primary};
   flex-direction: row;

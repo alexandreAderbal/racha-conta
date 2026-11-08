@@ -20,6 +20,7 @@ import { Centralizado } from "@Componentes/containers/containers";
 import { SelecionarArquivos } from "./selecionar-arquivos";
 import { PixConfiguracao } from "./pix-configuracao";
 import appConfig from "../../../../app.json";
+import AdMobBanner from "@Componentes/admob-banner";
 
 type Props = {
   navigation: any;
@@ -36,6 +37,8 @@ export function Home({ navigation }: Props) {
 
   return (
     <ContainerPage bg="#003d3b">
+      <AdMobBanner />
+
       <Centralizado>
         <LogoArea>
           <LogoIcon>

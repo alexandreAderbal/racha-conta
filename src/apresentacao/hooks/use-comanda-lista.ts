@@ -25,7 +25,7 @@ export function useComandaLista() {
     }
     if (resultado) {
       dispatch(atualizarComanda(resultado));
-      navigation.navigate("ComandaResultado");
+      navigation.navigate("ComandaResultado", { mostrarInterstitial: false });
     }
   };
 

@@ -9,6 +9,7 @@ import {
   LadoDireito,
 } from "./styles";
 
+import AdMobBanner from "@Componentes/admob-banner";
 import { Icon } from "@Componentes/icon";
 
 export default function Header({
@@ -19,22 +20,25 @@ export default function Header({
   const titulo = options.title ?? route.name;
 
   return (
-    <Container>
-      <LadoEsquerdo>
-        <BotaoIcon onPress={() => navigation.goBack()}>
-          <Icon nome="arrow-left" size={28} cor="#FFFFFF" />
-        </BotaoIcon>
-      </LadoEsquerdo>
+    <>
+      <AdMobBanner />
+      <Container>
+        <LadoEsquerdo>
+          <BotaoIcon onPress={() => navigation.goBack()}>
+            <Icon nome="arrow-left" size={28} cor="#FFFFFF" />
+          </BotaoIcon>
+        </LadoEsquerdo>
 
-      <Conteudo>
-        <Titulo>{titulo}</Titulo>
-      </Conteudo>
+        <Conteudo>
+          <Titulo>{titulo}</Titulo>
+        </Conteudo>
 
-      <LadoDireito>
-        <BotaoIcon onPress={() => navigation.navigate("Home")}>
-          <Icon nome="home-outline" size={28} cor="#FFFFFF" />
-        </BotaoIcon>
-      </LadoDireito>
-    </Container>
+        <LadoDireito>
+          <BotaoIcon onPress={() => navigation.navigate("Home")}>
+            <Icon nome="home-outline" size={28} cor="#FFFFFF" />
+          </BotaoIcon>
+        </LadoDireito>
+      </Container>
+    </>
   );
 }
