@@ -1,0 +1,5 @@
+export const PLAY_INTEGRITY_CONSTANT = {
+  GOOGLE_CLOUD_PROJECT_NUMBER: "217374927600",
+  PACKAGE_HEADER: "X-App-Package",
+  TOKEN_HEADER: "X-Integrity-Token",
+} as const;

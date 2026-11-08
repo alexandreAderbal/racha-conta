@@ -12,12 +12,14 @@ import {
   Actions,
   Footer,
   FooterText,
+  FooterDescricao,
 } from "./styles";
 import { Icon } from "@Componentes/icon";
 import ContainerPage from "@Componentes/containers/container-page";
 import { Centralizado } from "@Componentes/containers/containers";
 import { SelecionarArquivos } from "./selecionar-arquivos";
 import { PixConfiguracao } from "./pix-configuracao";
+import appConfig from "../../../../app.json";
 
 type Props = {
   navigation: any;
@@ -65,11 +67,7 @@ export function Home({ navigation }: Props) {
 
           <Feature>
             <FeatureIcon>
-              <Icon
-                nome="text-box-search-outline"
-                size={28}
-                cor="#00D4B4"
-              />
+              <Icon nome="text-box-search-outline" size={28} cor="#00D4B4" />
             </FeatureIcon>
 
             <FeatureText>Extração automática dos itens</FeatureText>
@@ -101,8 +99,11 @@ export function Home({ navigation }: Props) {
       </Centralizado>
 
       <Footer>
-        <Icon nome="calculator-variant" size={18} cor="#00A994" />
-        <FooterText>Divida a conta. Aproveite o momento.</FooterText>
+        <FooterDescricao>
+          <Icon nome="calculator-variant" size={18} cor="#00A994" />
+          <FooterText>Divida a conta. Aproveite o momento.</FooterText>
+        </FooterDescricao>
+        <FooterText>Versão {appConfig.expo.version}</FooterText>
       </Footer>
     </ContainerPage>
   );

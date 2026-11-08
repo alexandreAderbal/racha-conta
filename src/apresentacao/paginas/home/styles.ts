@@ -74,8 +74,13 @@ export const Footer = styled.View`
   height: 64px;
   align-items: center;
   justify-content: center;
+  background-color: #003735;
+`;
+
+export const FooterDescricao = styled.View`
+  align-items: center;
+  justify-content: center;
   flex-direction: row;
-  gap: 8px;
   background-color: #003735;
 `;
 
@@ -83,6 +88,7 @@ export const FooterText = styled.Text`
   font-family: ${Theme.fonts.regular};
   color: #79aaa7;
   font-size: 12px;
+  margin-left: 8px;
 `;
 
 export const PixLabel = styled.Text`

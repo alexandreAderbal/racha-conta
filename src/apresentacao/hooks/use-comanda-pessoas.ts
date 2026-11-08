@@ -32,12 +32,12 @@ export function useComandaPessoas(item: ItemDTO) {
   function addPessoa() {
     const nomeLimpo = nome.trim();
     if (!nomeLimpo) return;
-    adicionarPessoa(PessoaDTO.criar(nomeLimpo), item.descricao);
+    adicionarPessoa(PessoaDTO.criar(nomeLimpo), item.identificador);
     setNome("");
   }
 
   function selecionarPessoa(pessoa: PessoaDTO) {
-    marcarPessoa(pessoa, item.descricao);
+    marcarPessoa(pessoa, item.identificador);
   }
 
   const todasPessoasSelecionadas =
@@ -55,7 +55,7 @@ export function useComandaPessoas(item: ItemDTO) {
       : pessoas.filter((pessoa) => !nomesSelecionados.has(pessoa.nome));
 
     pessoasParaAlternar.forEach((pessoa) =>
-      marcarPessoa(pessoa, item.descricao),
+      marcarPessoa(pessoa, item.identificador),
     );
   }
 
@@ -82,7 +82,11 @@ export function useComandaPessoas(item: ItemDTO) {
   function salvarQuantidade(pessoa: PessoaDTO, valorDigitado: string) {
     const quantidade = Number(valorDigitado.replace(",", "."));
     if (valorDigitado.trim() && Number.isFinite(quantidade)) {
-      atualizarQuantidadeConsumida(item.descricao, pessoa.nome, quantidade);
+      atualizarQuantidadeConsumida(
+        item.identificador,
+        pessoa.nome,
+        quantidade,
+      );
     }
     setQuantidadesDigitadas((valores) => {
       const atualizados = { ...valores };

@@ -126,7 +126,9 @@ export function Comanda() {
       <FlatList
         style={{ flex: 1 }}
         data={comanda?.itens}
-        keyExtractor={(item, index) => `${item.id ?? item.descricao}_${index}`}
+        keyExtractor={(item, index) =>
+          `${item.identificador ?? item.id ?? item.descricao}_${index}`
+        }
         renderItem={renderItem}
         keyboardShouldPersistTaps="always"
         contentContainerStyle={{

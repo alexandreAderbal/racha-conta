@@ -37,6 +37,7 @@ export async function inicializarBanco() {
     CREATE TABLE IF NOT EXISTS itens (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       id_comanda INTEGER NOT NULL,
+      identificador TEXT NOT NULL,
       descricao TEXT NOT NULL,
       quantidade REAL NOT NULL DEFAULT 1,
       valor_unitario REAL NOT NULL DEFAULT 0,
@@ -58,6 +59,26 @@ export async function inicializarBanco() {
         REFERENCES pessoas(id)
         ON DELETE CASCADE
     );
+  `);
+
+  const colunasItens = await db.getAllAsync<{ name: string }>(
+    "PRAGMA table_info(itens)",
+  );
+  const possuiIdentificador = colunasItens.some(
+    (coluna) => coluna.name === "identificador",
+  );
+
+  if (!possuiIdentificador) {
+    await db.execAsync("ALTER TABLE itens ADD COLUMN identificador TEXT");
+  }
+
+  await db.execAsync(`
+    UPDATE itens
+    SET identificador = printf('%08d', id)
+    WHERE identificador IS NULL OR TRIM(identificador) = '';
+
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_itens_comanda_identificador
+    ON itens (id_comanda, identificador);
   `);
 
   console.log("Criação do banco e tabelas finalizadas.");

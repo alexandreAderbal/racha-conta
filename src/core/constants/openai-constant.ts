@@ -1,7 +1,9 @@
 export const OPENAI_CONSTANT = {
   MODEL: "gpt-5.6-luna",
   COMANDA_PROMPT: `
-    Leia cuidadosamente toda a imagem da comanda, incluindo textos impressos e textos escritos à mão com caneta.
+    Você receberá uma ou mais imagens para gerar uma única divisão. Elas podem ser partes da mesma comanda ou comandas diferentes. Analise todos os arquivos e combine seus dados em uma única resposta.
+
+    Leia cuidadosamente todas as imagens da comanda, incluindo textos impressos e textos escritos à mão com caneta.
 
     PRIORIDADE:
     1. Leia o NOME DO RESTAURANTE no cabeçalho, logotipo ou parte superior da comanda.
@@ -23,6 +25,7 @@ export const OPENAI_CONSTANT = {
       "itens": [
         {
           "id": null,
+          "identificador": "00000001",
           "descricao": "",
           "quantidade": 1,
           "valorUnitario": 0,
@@ -45,6 +48,8 @@ export const OPENAI_CONSTANT = {
     - Nunca invente um nome.
     - Se não for possível ler o nome, use "".
     - Identifique TODOS os produtos.
+    - Verifique cada imagem selecionada e inclua os produtos que aparecem em qualquer uma delas; não encerre a leitura após a primeira imagem.
+    - Consolide os produtos de todos os arquivos em uma única lista. Se imagens da mesma comanda se sobrepuserem, conte uma linha repetida por sobreposição apenas uma vez. Se forem comandas diferentes, some todas as linhas, mesmo quando produto e preço se repetirem.
     - Preserve os nomes dos produtos como aparecem na comanda.
     - Não invente produtos.
     - Não invente preços.
@@ -53,10 +58,13 @@ export const OPENAI_CONSTANT = {
     - Se a quantidade não estiver clara, use 1.
     - "valorUnitario" é o preço de uma unidade.
     - "valorTotal" é o valor total do item.
+    - Quando houver mais de uma comanda, some os valores dos itens de todas elas: "subtotal" deve ser a soma dos "valorTotal" de todos os itens incluídos, e "total" deve ser a soma dos totais impressos nas comandas. Se algum total impresso não estiver legível, use a soma dos itens daquela comanda.
+    - Nunca use apenas os valores da primeira imagem ou da primeira comanda.
     - Não coloque subtotal, taxa de serviço ou total dentro de "itens".
     - "COUVERT" é um produto e deve ser incluído em "itens".
     - "pessoas" deve sempre ser [].
     - "id" deve sempre ser null.
+    - "identificador" deve ser único e sequencial para cada item, como uma string com exatamente 8 dígitos numéricos, preenchida com zeros à esquerda e começando em "00000001".
     - "status" deve sempre ser "EM_ANDAMENTO".
     - "taxaServicoGarcom" é o valor da taxa de serviço, e NÃO o nome do garçom.
     - Use exatamente os nomes dos campos do JSON.
@@ -65,6 +73,6 @@ export const OPENAI_CONSTANT = {
     - Não adicione explicações.
 
     ANTES DE RESPONDER:
-    Examine visualmente a imagem inteira uma segunda vez, dando atenção especial ao cabeçalho e a qualquer texto manuscrito com caneta. Só então gere o JSON.
+    Examine todas as imagens inteiras uma segunda vez, dando atenção especial ao cabeçalho, às continuações da lista de produtos e a qualquer texto manuscrito com caneta. Só então gere o JSON.
 `,
 } as const;

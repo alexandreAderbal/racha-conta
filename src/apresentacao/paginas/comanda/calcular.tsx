@@ -20,7 +20,7 @@ interface IProps {
 
 export default function Calcular({ action, itensSemPessoa }: IProps) {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const [percentual, setPerncentual] = useState<string>("0");
+  const [percentual, setPerncentual] = useState<string>("");
   const [alertaVisivel, setAlertaVisivel] = useState(false);
   const modalRef = useRef<ModalRef>(null);
 

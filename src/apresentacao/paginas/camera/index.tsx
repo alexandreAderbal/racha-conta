@@ -87,7 +87,7 @@ export function Camera({ navigation }: any) {
     } catch (error) {
       console.error("Erro ao tirar foto:", error);
 
-      Alert.alert("Erro", "Não foi possível tirar a foto.");
+      Alert.alert("Erro", "Não foi possível tirar a foto." + error);
     } finally {
       setTirandoFoto(false);
       desativarSpinner();

@@ -1,9 +1,9 @@
 import { ComandaService } from "./comanda-service";
 import { ConfiguracaoService } from "./configuracao-service";
-import { OpenAIService } from "./openai-service";
+import { OpenAIAPIService } from "./openai-api-service";
 
 export const SERVICE = {
-  openAIService: new OpenAIService(),
   comanda: new ComandaService(),
   configuracao: new ConfiguracaoService(),
+  openAIAPIService: new OpenAIAPIService(),
 };

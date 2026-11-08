@@ -23,7 +23,7 @@ export function useComanda() {
   const dispatch = useAppDispatch();
 
   const processarOpenAi = async (base64: string[]): Promise<boolean> => {
-    const dto = await SERVICE.openAIService.analisar(base64);
+    const dto = await SERVICE.openAIAPIService.analisar(base64);
 
     if (!dto.itens?.length) {
       mostrarAlerta({
@@ -52,14 +52,14 @@ export function useComanda() {
     if (comanda) adicionarComanda({ ...comanda, mesa: nome });
   };
 
-  const adicionarPessoa = (pessoa: PessoaDTO, descricao: string) => {
+  const adicionarPessoa = (pessoa: PessoaDTO, identificador: string) => {
     dispatch(atualizarPessoas(pessoa));
-    dispatch(atualizaComandaItemPessoas({ pessoa, descricao }));
+    dispatch(atualizaComandaItemPessoas({ pessoa, identificador }));
   };
 
-  const marcarPessoa = (pessoa: PessoaDTO, descricao: string) => {
+  const marcarPessoa = (pessoa: PessoaDTO, identificador: string) => {
     dispatch(selecionarPessoa(pessoa));
-    dispatch(atualizaComandaItemPessoas({ pessoa, descricao }));
+    dispatch(atualizaComandaItemPessoas({ pessoa, identificador }));
   };
 
   const marcarPessoas = (pessoas: PessoaDTO[]) => {
@@ -71,13 +71,13 @@ export function useComanda() {
   };
 
   const atualizarQuantidadeConsumida = (
-    descricao: string,
+    identificador: string,
     nome: string,
     quantidadeConsumida: number,
   ) => {
     dispatch(
       atualizarQuantidadePessoaItem({
-        descricao,
+        identificador,
         nome,
         quantidadeConsumida,
       }),

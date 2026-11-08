@@ -76,11 +76,11 @@ const ComandaSlice = createSlice({
     },
     atualizaComandaItemPessoas(
       state,
-      action: PayloadAction<{ pessoa: PessoaDTO; descricao: string }>,
+      action: PayloadAction<{ pessoa: PessoaDTO; identificador: string }>,
     ) {
-      const { descricao, pessoa } = action.payload;
+      const { identificador, pessoa } = action.payload;
       const item = state.comanda?.itens.find(
-        (item) => item.descricao === descricao,
+        (item) => item.identificador === identificador,
       );
       if (!item) return;
       const pessoaJaExiste = item.pessoas.some((p) => p.nome === pessoa.nome);
@@ -127,14 +127,14 @@ const ComandaSlice = createSlice({
     atualizarQuantidadePessoaItem(
       state,
       action: PayloadAction<{
-        descricao: string;
+        identificador: string;
         nome: string;
         quantidadeConsumida: number;
       }>,
     ) {
-      const { descricao, nome, quantidadeConsumida } = action.payload;
+      const { identificador, nome, quantidadeConsumida } = action.payload;
       const item = state.comanda?.itens.find(
-        (item) => item.descricao === descricao,
+        (item) => item.identificador === identificador,
       );
       const pessoa = item?.pessoas.find((p) => p.nome === nome);
       if (!item || !pessoa) return;

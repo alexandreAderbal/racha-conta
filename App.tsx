@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { useEffect } from "react";
 import { inicializarBanco } from "@Infra-data-base/index";
+import { SERVICE } from "@Infra-service";
 import { Spinner } from "@Componentes/spinner";
 import { useFonts } from "@expo-google-fonts/inter";
 import { Inter_400Regular } from "@expo-google-fonts/inter/400Regular";
@@ -14,10 +15,13 @@ import { Inter_600SemiBold } from "@expo-google-fonts/inter/600SemiBold";
 import { Inter_700Bold } from "@expo-google-fonts/inter/700Bold";
 import { Inter_800ExtraBold } from "@expo-google-fonts/inter/800ExtraBold";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { isRunningInExpoGo } from "expo";
 import * as SplashScreen from "expo-splash-screen";
 
 void SplashScreen.preventAutoHideAsync();
-SplashScreen.setOptions({ duration: 500, fade: true });
+if (!isRunningInExpoGo()) {
+  SplashScreen.setOptions({ duration: 500, fade: true });
+}
 
 export default function App() {
   const [fontesCarregadas, erroFontes] = useFonts({
@@ -31,6 +35,14 @@ export default function App() {
 
   useEffect(() => {
     inicializarBanco();
+  }, []);
+
+  useEffect(() => {
+    void SERVICE.openAIAPIService
+      .prepararPlayIntegrity()
+      .catch((error: unknown) => {
+        console.warn("Could not prepare Play Integrity:", error);
+      });
   }, []);
 
   useEffect(() => {
