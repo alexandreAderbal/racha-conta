@@ -128,7 +128,9 @@ export default function ComandaResultado({ navigation, route }: Props) {
           <BTN.Sucesso
             icon="share-variant"
             label="Compartilhar"
-            action={() => compartilharResultado(comanda)}
+            action={() =>
+              compartilharResultado(comanda, !route.params?.mostrarInterstitial)
+            }
           />
         )}
       </Rodape>
